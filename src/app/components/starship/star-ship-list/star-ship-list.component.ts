@@ -22,7 +22,6 @@ export class StarShipListComponent implements OnInit {
   getPage():void{
     this.starWarsService.getAll(this.page)
     .subscribe((pageResult: PaginatorStarship)=> {
-      console.log(JSON.stringify(pageResult));
       this.paginatorStarship = pageResult;
     })
   }

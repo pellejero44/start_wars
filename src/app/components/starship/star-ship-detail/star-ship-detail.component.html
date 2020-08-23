@@ -1,0 +1,25 @@
+<button mat-raised-button color="primary" [routerLink]="['/starships']">Primary</button>
+<div class="row">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="col-md-6">
+            <div class="row">
+              <h3>Starship:</h3>
+              <!-- <img [src]="starship.image" [alt]="starship.name" class="img-rounded"> -->
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h3>{{starship?.name}}</h3>
+            <p><b>Pasajeros:</b> {{starship?.passengers}}</p>
+            <p><b>Cargo capacidad:</b> {{starship?.cargo_capacity}}</p>
+            <p><b>Max velocidad admosferica:</b> {{starship?.max_atmosphering_speed}}</p>
+            <p><b>Tripulacion:</b> {{starship?.crew}}</p>
+            <p><b>Model:</b> {{starship?.model}}</p>
+            <p><b>Manufacturado:</b> {{starship?.manufacturer}}</p>
+            <p><b>Consumibles:</b> {{starship?.consumables}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -22,5 +22,18 @@ export class StarWarsService implements IStarWarsApi{
       return this.http.get<Starship>('http://swapi.dev/api/starships/'+ id);
     }
 
+    getId(urlStarShip:string):string{
+      let id = urlStarShip.split("/").filter((item)=>{
+        return item !== "";
+      }).slice(-1)[0];
+
+      return id;
+    }
+
+    getImageUrl(urlStarShip:string):string{      
+      let url = `https://starwars-visualguide.com/assets/img/starships/${this.getId(urlStarShip)}.jpg`;
+      
+      return  url;
+    }
  
 }

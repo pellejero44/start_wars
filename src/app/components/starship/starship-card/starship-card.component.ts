@@ -1,31 +1,32 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Starship } from 'src/app/models/starship';
+import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
 
 @Component({
   selector: 'app-starship-card',
   templateUrl: './starship-card.component.html',
   styleUrls: ['./starship-card.component.scss']
 })
-export class StarshipCardComponent implements OnInit {
+export class StarshipCardComponent  {
   @Input() starship: Starship;
 
-  constructor() { }
-
-  ngOnInit(): void {
-    this.getStarshipId();
-  }
-
-  private getStarshipId():void {
-    this.starship.shipId =  this.starship.url.split("/").pop()
-  }
+  constructor(private starWarsService: StarWarsService,  private router: Router) { }
 
   public getImageUrl():string {
-    let id = this.starship.url.split("/").filter((item)=>{
-      return item !== "";
-    }).slice(-1)[0];
-    let url = `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
-    console.log(url);
-    return  url;
+   return this.starWarsService.getImageUrl(this.starship.url);
+  }
+
+  public goToDetail():void{
+    let id = this.starWarsService.getId(this.starship.url);
+
+    this.router.navigate(['starships', id]).then( (e) => {
+      if (e) {
+        console.log("Navigation is successful!");
+      } else {
+        console.log("Navigation has failed!");
+      }
+    });
   }
 
 }

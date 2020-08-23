@@ -1,4 +1,4 @@
 <mat-card>
     <mat-card-title>{{starship.name}}</mat-card-title>
-    <img mat-card-image [src]="getImageUrl()">
+    <img mat-card-image [attr.data-src]="getImageUrl()" (click)="goToDetail()" style="cursor: pointer;">
 </mat-card>
