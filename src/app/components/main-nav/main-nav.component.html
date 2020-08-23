@@ -1,0 +1,35 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav 
+      #drawer
+      class="sidenav"
+      [ngClass]="{hidden: !(isHandset$ | async) === true}"
+      fixedInViewport="false"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="starships">Starship</a>      
+      <a mat-list-item href="#">Pagina protegida</a>
+      <a mat-list-item href="#">Inicio de sesion</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>star wars</span>
+      <span class="spacer"></span>
+      <a routerLink="starships">Starship</a>      
+      <a href="#">Pagina protegida</a>
+      <a href="#">Inicio de sesion</a>
+    </mat-toolbar>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
