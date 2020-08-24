@@ -8,21 +8,31 @@ import { StarshipModule } from './components/starship/starship.module';
 import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { UserModule } from './components/user/user.module';
 import { MaterialModule } from './material.module';
+import { AuthService } from './services/implementations/auth.service';
+
+// ngrx
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './store/effects/auth.effects';
+import{AuthActionTypes, All} from './store/actions/auth.actions'
+import { StoreModule } from '@ngrx/store';
+import {reducers} from './store/app.states';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    StarshipModule,
-    AppRoutingModule,
-    UserModule,    
-  ],
   declarations: [
     AppComponent,
     MainNavComponent
   ],
-  providers: [],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    StoreModule.forRoot(reducers, {}),
+    EffectsModule.forRoot([AuthEffects]),
+    StarshipModule,
+    AppRoutingModule,
+    UserModule,    
+  ],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

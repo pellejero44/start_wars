@@ -1,5 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { LogIn } from 'src/app/store/actions/auth.actions';
+import { User } from 'src/app/models/user';
+import { State } from 'src/app/store/reducers/auth.reducers';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +14,8 @@ export class LoginComponent implements OnInit {
   private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   public loginForm: FormGroup;
   public hide = true;
-  //constructor(private authSvc: AuthService, private route: Router) {}
+  
+  constructor(private store: Store<State>) {}
 
   ngOnInit() {
     this.loginForm= this.createForm();
@@ -28,15 +33,10 @@ export class LoginComponent implements OnInit {
 
   onLogin():void {
     if (this.loginForm.valid) {
+      let userLogin= new User(this.loginForm.value.email, this.loginForm.value.password);
+      this.store.dispatch(new LogIn(userLogin));
       this.onResetForm();
     }
-    // this.authSvc
-    //   .loginByEmail(form)
-    //   .then(res => {
-    //     console.log('Successfully', res);
-    //     this.route.navigate(['/']);
-    //   })
-    //   .catch(err => console.log('Error', err));
   }
 
   onResetForm(): void {
