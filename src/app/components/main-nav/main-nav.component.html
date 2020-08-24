@@ -1,4 +1,6 @@
 <mat-sidenav-container class="sidenav-container">
+
+  <!-- sidenav for mobile menu -->
   <mat-sidenav 
       #drawer
       class="sidenav"
@@ -14,6 +16,17 @@
       <a mat-list-item href="#">Inicio de sesion</a>
     </mat-nav-list>
   </mat-sidenav>
+
+  <!-- sidenav for mobile menu for login form  -->
+  <mat-sidenav 
+    #login
+    position="end"
+    fixedInViewport="false"
+    [mode]="'over'">
+  <mat-toolbar>Login</mat-toolbar>
+  <app-login></app-login>
+</mat-sidenav>
+
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <button
@@ -28,7 +41,7 @@
       <span class="spacer"></span>
       <a routerLink="starships">Starship</a>      
       <a href="#">Pagina protegida</a>
-      <a href="#">Inicio de sesion</a>
+      <a (click)="login.toggle()">Inicio de sesion</a>
     </mat-toolbar>
     <ng-content></ng-content>
   </mat-sidenav-content>
