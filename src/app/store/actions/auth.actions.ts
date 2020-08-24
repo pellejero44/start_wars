@@ -48,10 +48,6 @@ export class LogOut implements Action {
   constructor(public payload: any) { }
 }
 
-export class GetStatus implements Action {
-  readonly type = AuthActionTypes.GET_STATUS;
-  constructor(public payload: any) { }
-}
 
 
 export type All =
@@ -62,4 +58,3 @@ export type All =
   | SignUpSuccess
   | SignUpFailure
   | LogOut
-  | GetStatus

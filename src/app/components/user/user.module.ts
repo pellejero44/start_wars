@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule}   from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from 'src/app/material.module';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 
 @NgModule({
@@ -12,11 +13,13 @@ import { MaterialModule } from 'src/app/material.module';
     ReactiveFormsModule,
     MaterialModule,
   ],
+  entryComponents: [SignUpComponent],
   exports:[
     LoginComponent
   ],
   declarations: [
-    LoginComponent
+    LoginComponent,
+    SignUpComponent
   ]
 })
 export class UserModule { }

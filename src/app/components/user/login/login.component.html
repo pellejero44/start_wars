@@ -11,10 +11,10 @@
           />  
 
           <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">
-            Email es <strong>obligatorio</strong>
+            Email is <strong>required</strong>
           </mat-error>
           <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.pattern">
-            Por favor introduce un email valido
+            Please introduce a valid email 
           </mat-error>          
 
       </mat-form-field>
@@ -30,14 +30,17 @@
           <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
 
           <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.required">
-            La contrasena es <strong>obligatoria</strong>
+            Password is <strong>required</strong>
           </mat-error>
           <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.minlength">
-            Hay un minimo de 5 caracteres
+            5 characters are required
           </mat-error>
         </mat-form-field>
       </p>
+      <p>{{errorMessage}}</p>
       <button type="submit" mat-raised-button color="primary" [disabled]="!loginForm.valid">Login</button>
-    </form>
+      <p>dont you have an Account ?</p>
+      <button mat-raised-button color="primary" (click)="openSignUp()">Create account</button>
+    </form>   
   </mat-card-content>
 </mat-card>

@@ -8,7 +8,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
 import { tap } from 'rxjs/operators';
-import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure } from '../actions/auth.actions';
+import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure } from '../actions/auth.actions';
+import { User } from 'src/app/models/user';
 
 @Injectable()
 export class AuthEffects {
@@ -24,21 +25,17 @@ export class AuthEffects {
         .map((action: LogIn) => action.payload)
         .switchMap(payload => {
             return this.authService.login(payload.email, payload.password)
-                .map((user) => {
-                    return new LogInSuccess({ token: user.token, email: payload.email });
-                })
-                .catch((error) => {
-                    console.log(error);
-                    return Observable.of(new LogInFailure({ error: error }));
+                .map((res) => {
+                    if(res)
+                        return new LogInSuccess({ email: payload.email, password: payload.password  });
+                    else
+                        return new LogInFailure({});
                 });
         });
 
     @Effect({ dispatch: false })
     LogInSuccess: Observable<any> = this.actions.pipe(
-        ofType(AuthActionTypes.LOGIN_SUCCESS),
-        tap((user) => {
-            console.log("LogInSuccess ok");
-        })
+        ofType(AuthActionTypes.LOGIN_SUCCESS)
     );
 
     @Effect({ dispatch: false })
@@ -46,5 +43,40 @@ export class AuthEffects {
         ofType(AuthActionTypes.LOGIN_FAILURE)
     );
     
+    @Effect()
+    SignUp: Observable<any> = this.actions
+        .ofType(AuthActionTypes.SIGNUP)
+        .map((action: SignUp) => action.payload)
+        .switchMap(payload => {
+            return this.authService.signUp(payload.email, payload.password)
+                .map((res) => {
+                    console.log(res);
+                    if(res)
+                        return new SignUpSuccess({ email: payload.email, password: payload.password });
+                    else
+                        return new SignUpFailure({});
+                });
+        });
+
+    @Effect({ dispatch: false })
+    SignUpSuccess: Observable<any> = this.actions.pipe(
+        ofType(AuthActionTypes.SIGNUP_SUCCESS),
+        tap((res) => {
+            this.authService.setUsers( res.payload.email, res.payload.password);
+        })
+    );
+
+    @Effect({ dispatch: false })
+    SignUpFailure: Observable<any> = this.actions.pipe(
+        ofType(AuthActionTypes.SIGNUP_FAILURE)
+    );
+
+    @Effect({ dispatch: false })
+    public LogOut: Observable<any> = this.actions.pipe(
+        ofType(AuthActionTypes.LOGOUT),
+        tap(() => {
+            this.authService.logout();
+        })
+    );
 
 }

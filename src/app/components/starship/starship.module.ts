@@ -10,6 +10,7 @@ import { LazyLoadImagesModule } from 'src/app/directives/lazyLoadImage/lazy-load
 import { StarShipListComponent } from './star-ship-list/star-ship-list.component';
 import { StarshipCardComponent } from './starship-card/starship-card.component';
 import { StarShipDetailComponent } from './star-ship-detail/star-ship-detail.component';
+import { AuthGuardService } from 'src/app/services/auth-guard.service';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { StarShipDetailComponent } from './star-ship-detail/star-ship-detail.com
     MatCardModule,
     MatButtonModule,
     LazyLoadImagesModule,
-  ]
+  ],
+  providers: [AuthGuardService]
 })
 export class StarshipModule { }

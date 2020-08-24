@@ -39,7 +39,7 @@ const myModule = [
   MatDialogModule,
   MatSelectModule,
   LayoutModule,
-  MatTabsModule
+  MatTabsModule,
 ];
 
 @NgModule({

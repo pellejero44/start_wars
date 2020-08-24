@@ -4,6 +4,10 @@ import { Store } from '@ngrx/store';
 import { LogIn } from 'src/app/store/actions/auth.actions';
 import { User } from 'src/app/models/user';
 import { State } from 'src/app/store/reducers/auth.reducers';
+import { MatDialog } from '@angular/material/dialog';
+import { SignUpComponent } from '../sign-up/sign-up.component';
+import { Observable } from 'rxjs';
+import { selectAuthState } from 'src/app/store/app.states';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +18,19 @@ export class LoginComponent implements OnInit {
   private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   public loginForm: FormGroup;
   public hide = true;
+  getState: Observable<any>;
+  errorMessage: string | null;
   
-  constructor(private store: Store<State>) {}
+  constructor(private store: Store<State>, private signupDialog: MatDialog) {
+      this.getState = this.store.select(selectAuthState);
+    }
 
   ngOnInit() {
     this.loginForm= this.createForm();
+
+    this.getState.subscribe((state) => {
+      this.errorMessage = state.errorMessage;
+    });
   }
 
   private createForm(): FormGroup {
@@ -35,12 +47,16 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       let userLogin= new User(this.loginForm.value.email, this.loginForm.value.password);
       this.store.dispatch(new LogIn(userLogin));
-      this.onResetForm();
+      //this.onResetForm();
     }
   }
 
   onResetForm(): void {
     this.loginForm.reset();
+  }
+
+  openSignUp():void{
+    this.signupDialog.open(SignUpComponent);
   }
 
 }

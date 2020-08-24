@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 
 export interface IAuthService {
-    login(username: string, password: string): Observable<any>;
+    login(username: string, password: string): Observable<boolean>;
     logout(): void;
-    signup():void;
+    signUp(username: string, password: string):Observable<boolean>;
   }
   
