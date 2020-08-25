@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path:'starships',
     loadChildren: () => import('./components/starship/starship.module').then(m=> m.StarshipModule)
+  },
+  {
+    path:'secretpage',  
+    loadChildren: () => import('./components/secret/secret.module').then(m=> m.SecretModule)    
   }
 ];
 

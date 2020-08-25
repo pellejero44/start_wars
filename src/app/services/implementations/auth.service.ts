@@ -3,6 +3,7 @@ import { IAuthService } from '../interfaces/i-auth-service';
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/of';
 import { User } from 'src/app/models/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { User } from 'src/app/models/user';
 export class AuthService implements IAuthService {
 
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   private getUsers(): any{
@@ -73,6 +74,7 @@ export class AuthService implements IAuthService {
 
   logout():void {
     localStorage.isLoggedIn=false;
+    this.router.navigate(['starships']);
   }
 
   public setUsers(email:string, password: string):void {

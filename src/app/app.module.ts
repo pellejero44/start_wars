@@ -9,12 +9,15 @@ import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { UserModule } from './components/user/user.module';
 import { MaterialModule } from './material.module';
 import { AuthService } from './services/implementations/auth.service';
+import { SecretModule } from './components/secret/secret.module';
 
 // ngrx
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/effects/auth.effects';
 import { StoreModule } from '@ngrx/store';
 import {reducers} from './store/app.states';
+
+
 
 @NgModule({
   declarations: [
@@ -28,8 +31,9 @@ import {reducers} from './store/app.states';
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([AuthEffects]),
     StarshipModule,
-    AppRoutingModule,
-    UserModule,    
+    SecretModule,    
+    UserModule,  
+    AppRoutingModule,  
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
