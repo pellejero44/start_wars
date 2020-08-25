@@ -57,6 +57,12 @@ export function reducer(state = initialState, action: All): State{
         case AuthActionTypes.LOGOUT: {
           return initialState;
         }
+        case AuthActionTypes.USER_HAS_ALREADY_LOGGED_IN_BEFORE: {
+          return {
+            ...state,
+            isAuthenticated: true
+          };
+        }
         default: {
             return state;
         }

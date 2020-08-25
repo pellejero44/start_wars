@@ -13,7 +13,8 @@
     <mat-nav-list>
       <a mat-list-item routerLink="starships">Starship</a>      
       <a mat-list-item href="#">Pagina protegida</a>
-      <a mat-list-item href="#">Inicio de sesion</a>
+      <a mat-list-item *ngIf="!isAuthenticated" (click)="login.toggle()">Log In</a>
+      <a mat-list-item *ngIf="isAuthenticated" (click)="logOut()">Log out</a>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -39,10 +40,12 @@
       </button>
       <span>star wars</span>
       <span class="spacer"></span>
-      <a routerLink="starships">Starship</a>      
-      <a href="#">Pagina protegida</a>
-      <a (click)="login.toggle()">Log In</a>
-      <a (click)="logOut()">Log out</a>
+      <div [ngClass]="{hidden: (isHandset$ | async) === true}">
+        <a routerLink="starships">Starship</a>      
+        <a href="#">Pagina protegida</a>
+        <a *ngIf="!isAuthenticated" (click)="login.toggle()">Log In</a>
+        <a *ngIf="isAuthenticated" (click)="logOut()">Log out</a>
+      </div>
     </mat-toolbar>
     <ng-content></ng-content>
   </mat-sidenav-content>

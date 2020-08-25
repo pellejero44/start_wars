@@ -79,4 +79,9 @@ export class AuthEffects {
         })
     );
 
+    @Effect({ dispatch: false })
+    UserHasAlreadyLoggedInBefore: Observable<any> = this.actions.pipe(
+        ofType(AuthActionTypes.USER_HAS_ALREADY_LOGGED_IN_BEFORE)
+    );
+
 }

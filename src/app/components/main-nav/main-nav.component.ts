@@ -15,7 +15,7 @@ import { selectAuthState } from 'src/app/store/app.states';
 export class MainNavComponent implements OnInit{
 
   getState: Observable<any>;
-  isAuthenticated: boolean = false;
+  isAuthenticated: boolean;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -28,7 +28,9 @@ export class MainNavComponent implements OnInit{
   }
   
   ngOnInit(): void {
+    this.isAuthenticated=false;
     this.getState.subscribe((state) => {
+      console.log(state);
       this.isAuthenticated = state.isAuthenticated;
     });
   }

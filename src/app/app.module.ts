@@ -13,7 +13,6 @@ import { AuthService } from './services/implementations/auth.service';
 // ngrx
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/effects/auth.effects';
-import{AuthActionTypes, All} from './store/actions/auth.actions'
 import { StoreModule } from '@ngrx/store';
 import {reducers} from './store/app.states';
 

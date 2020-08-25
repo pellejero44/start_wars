@@ -10,7 +10,7 @@ export enum AuthActionTypes {
   SIGNUP_SUCCESS = '[Auth] Signup Success',
   SIGNUP_FAILURE = '[Auth] Signup Failure',
   LOGOUT = '[Auth] Logout',
-  GET_STATUS = '[Auth] GetStatus'
+  USER_HAS_ALREADY_LOGGED_IN_BEFORE = '[Auth] User Has Already LoggedIn Before'
 }
 
 export class LogIn implements Action {
@@ -48,6 +48,11 @@ export class LogOut implements Action {
   constructor(public payload: any) { }
 }
 
+export class UserHasAlreadyLoggedInBefore implements Action {
+  readonly type = AuthActionTypes.USER_HAS_ALREADY_LOGGED_IN_BEFORE;
+  constructor(public payload: any) { }
+}
+
 
 
 export type All =
@@ -58,3 +63,4 @@ export type All =
   | SignUpSuccess
   | SignUpFailure
   | LogOut
+  | UserHasAlreadyLoggedInBefore
