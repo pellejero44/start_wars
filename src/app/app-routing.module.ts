@@ -6,7 +6,7 @@ const routes: Routes = [
   {path: '**', redirectTo: 'starships', pathMatch: 'full'},
   {
     path:'starships',
-    loadChildren: './components/starship/starship.module#StarshipModule'
+    loadChildren: () => import('./components/starship/starship.module').then(m=> m.StarshipModule)
   }
 ];
 

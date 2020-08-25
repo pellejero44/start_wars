@@ -19,14 +19,7 @@ export class StarshipCardComponent  {
 
   public goToDetail():void{
     let id = this.starWarsService.getId(this.starship.url);
-
-    this.router.navigate(['starships', id]).then( (e) => {
-      if (e) {
-        console.log("Navigation is successful!");
-      } else {
-        console.log("Navigation has failed!");
-      }
-    });
+    this.router.navigate(['starships', id]);
   }
 
 }

@@ -11,13 +11,15 @@ import { StarShipListComponent } from './star-ship-list/star-ship-list.component
 import { StarshipCardComponent } from './starship-card/starship-card.component';
 import { StarShipDetailComponent } from './star-ship-detail/star-ship-detail.component';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
+import { StarshipComponent } from './starship.component';
 
 
 @NgModule({
   declarations: [
     StarShipListComponent,
     StarshipCardComponent,
-    StarShipDetailComponent
+    StarShipDetailComponent,
+    StarshipComponent
   ],
   imports: [
     CommonModule,

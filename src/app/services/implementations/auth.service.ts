@@ -68,7 +68,7 @@ export class AuthService implements IAuthService {
   }
 
   isLoggedIn(): boolean {
-    return localStorage.isLoggedIn;
+    return localStorage.isLoggedIn === 'true' ? true: false;
   }
 
   logout():void {
