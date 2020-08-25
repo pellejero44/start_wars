@@ -6,6 +6,7 @@ import { User } from 'src/app/models/user';
 import { State } from 'src/app/store/reducers/auth.reducers';
 import { Observable } from 'rxjs';
 import { selectAuthState } from 'src/app/store/app.states';
+import { MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,7 +22,7 @@ export class SignUpComponent implements OnInit {
   errorMessage: string | null;
   @ViewChild('buttonToCloseDialog', { read: ElementRef }) buttonToCloseDialog: ElementRef;
 
-  constructor(private store: Store<State>) {
+  constructor(private store: Store<State>, private _snackBar: MatSnackBar) {
     this.getState = this.store.select(selectAuthState);
    }
 
@@ -30,9 +31,14 @@ export class SignUpComponent implements OnInit {
     this.getState.subscribe((state) => {
       this.errorMessage = state.errorMessageSignUp;
       
-      if(state.canCloseSignUpView){
-        this.closeDialog();
+      if(state.canCloseSignUpView){        
         //show message login ok
+        this._snackBar.open('your account has been created successfully','',{
+          duration:1500,
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+        this.closeDialog();
       }
      
     });

@@ -2,3 +2,9 @@
     <app-starship-card *ngFor="let starship of paginatorStarship?.results"
     [starship]="starship"></app-starship-card>
 </div>
+<mat-paginator [length]="paginatorStarship?.count"
+                [pageSize]="pagesize"
+                showFirstLastButtons
+                [hidePageSize]="true"
+                (page)="changePage($event)">
+</mat-paginator>

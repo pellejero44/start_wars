@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PaginatorStarship } from 'src/app/models/paginator-starship';
 import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
+import { PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-star-ship-list',
@@ -9,13 +10,21 @@ import { StarWarsService } from 'src/app/services/implementations/star-wars.serv
 })
 export class StarShipListComponent implements OnInit {
  
-  private page:number;
-  paginatorStarship: PaginatorStarship;
- 
+  public page:number;
+  public pagesize: number;
+  public paginatorStarship: PaginatorStarship;
+  
   constructor(private starWarsService: StarWarsService) { }
 
   ngOnInit(): void {
-    this.page=1;
+    this.page=0;  
+    this.pagesize=0; 
+    this.getPage();
+  }
+
+  public changePage(pageEv: PageEvent): void{
+    this.page = pageEv.pageIndex;   
+    
     this.getPage();
   }
 
@@ -23,6 +32,8 @@ export class StarShipListComponent implements OnInit {
     this.starWarsService.getAll(this.page)
     .subscribe((pageResult: PaginatorStarship)=> {
       this.paginatorStarship = pageResult;
+      if(this.pagesize ==0)
+        this.pagesize = pageResult.results.length;
     })
   }
 }

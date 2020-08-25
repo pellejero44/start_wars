@@ -15,6 +15,7 @@ export class StarWarsService implements IStarWarsApi{
   constructor(private http: HttpClient) { }
 
     getAll(page: number): Observable<PaginatorStarship> {
+      page++;
       return this.http.get<PaginatorStarship>('http://swapi.dev/api/starships/?page='+ page);
     }
 
