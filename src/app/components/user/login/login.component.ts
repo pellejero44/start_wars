@@ -29,7 +29,9 @@ export class LoginComponent implements OnInit {
     this.loginForm= this.createForm();
 
     this.getState.subscribe((state) => {
-      this.errorMessage = state.errorMessage;
+      this.errorMessage = state.errorMessageLogin;
+      if(state.isAuthenticated)
+        this.onResetForm();
     });
   }
 
@@ -47,7 +49,6 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       let userLogin= new User(this.loginForm.value.email, this.loginForm.value.password);
       this.store.dispatch(new LogIn(userLogin));
-      //this.onResetForm();
     }
   }
 
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
   }
 
   openSignUp():void{
-    this.signupDialog.open(SignUpComponent);
+    this.signupDialog.open(SignUpComponent, { disableClose: true });  
   }
 
 }

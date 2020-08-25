@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { LogIn, SignUp } from 'src/app/store/actions/auth.actions';
@@ -19,6 +19,7 @@ export class SignUpComponent implements OnInit {
   public hide = true;
   getState: Observable<any>;
   errorMessage: string | null;
+  @ViewChild('buttonToCloseDialog', { read: ElementRef }) buttonToCloseDialog: ElementRef;
 
   constructor(private store: Store<State>) {
     this.getState = this.store.select(selectAuthState);
@@ -26,10 +27,19 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit():void {
     this.signUpForm= this.createForm();
-
     this.getState.subscribe((state) => {
-      this.errorMessage = state.errorMessage;
+      this.errorMessage = state.errorMessageSignUp;
+      
+      if(state.canCloseSignUpView){
+        this.closeDialog();
+        //show message login ok
+      }
+     
     });
+  }
+
+  public closeDialog():void{
+    this.buttonToCloseDialog.nativeElement.click();
   }
 
   private createForm(): FormGroup {

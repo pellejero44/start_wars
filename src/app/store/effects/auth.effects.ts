@@ -50,7 +50,6 @@ export class AuthEffects {
         .switchMap(payload => {
             return this.authService.signUp(payload.email, payload.password)
                 .map((res) => {
-                    console.log(res);
                     if(res)
                         return new SignUpSuccess({ email: payload.email, password: payload.password });
                     else

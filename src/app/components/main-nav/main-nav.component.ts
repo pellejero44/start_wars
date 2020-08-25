@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -16,7 +16,8 @@ export class MainNavComponent implements OnInit{
 
   getState: Observable<any>;
   isAuthenticated: boolean;
-
+  isShowing:boolean;
+  
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -29,11 +30,26 @@ export class MainNavComponent implements OnInit{
   
   ngOnInit(): void {
     this.isAuthenticated=false;
-    this.getState.subscribe((state) => {
-      console.log(state);
-      this.isAuthenticated = state.isAuthenticated;
+    this.hideLoginSideNav();
+
+    this.getState.subscribe((state) => {    
+      if(state.canCloseLoginView != null){
+        if(state.canCloseLoginView)
+           this.hideLoginSideNav();
+        else 
+          this.showLoginSideNav()
+      }
+      this.isAuthenticated = state.isAuthenticated;  
     });
   }
+
+  public showLoginSideNav():void{
+    this.isShowing=true;
+  }
+
+  public hideLoginSideNav():void{
+    this.isShowing=false;
+  } 
 
   public logOut():void{
     this.store.dispatch(new LogOut({}));
