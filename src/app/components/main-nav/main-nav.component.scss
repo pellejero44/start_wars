@@ -10,14 +10,22 @@
   background: inherit;
 }
 
+
 .mat-toolbar.mat-primary {
+  background-color: white;
   position: sticky;
   top: 0;
   z-index: 1;
+  height: 50px;
+  color:black;
+  font-family: "BasisGrotesque-Regular-Pro";
+  font-weight: inherit;
 }
+
 .hidden{
   display: none;
 }
+
 .spacer{
   flex: 1 1 auto;
 }
@@ -25,15 +33,24 @@
 .mat-toolbar a{
   display: inline-block;
   margin: 0 10px;
-  color: white;
   text-decoration: none;
   cursor: pointer;
 }
 
 app-login{
-  padding: 0 10px;
+  overflow: auto;
+  padding: 40px 35px;
 }
 
-.closeicon{
-  cursor: pointer;
+.container-tabs{
+  margin-right: 20px;
+}
+
+a{
+  color:black;
+}
+
+
+.is-active {
+  text-decoration: underline !important;
 }

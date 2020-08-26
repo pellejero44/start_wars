@@ -1,76 +1,78 @@
 <mat-card>
-  <mat-icon aria-hidden="false" class="closeicon" aria-label="close login" (click)="closeDialog()">close</mat-icon>
+  <mat-icon aria-hidden="false" class="close-icon" aria-label="close login" (click)="closeDialog()">close</mat-icon>
     <mat-card-title>Sign up</mat-card-title>
     <mat-card-content>
-      <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
-        <p>
+      <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()" class="row">
+          <p class="col-md-6">
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Name"
+                  formControlName="name"
+                />      
+                <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">
+                  Name is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && email.errors.minlength">
+                  6 characters are required
+                </mat-error>              
+            </mat-form-field>
+            </p>
+            <p class="col-md-6">
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Surname"
+                  formControlName="surname"
+                />      
+                <mat-error *ngIf="surname.invalid && (surname.dirty || surname.touched) && surname.errors.required">
+                  Surname is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="surname.invalid && (surname.dirty || surname.touched) && surname.errors.minlength">
+                  6 characters are required
+                </mat-error>              
+            </mat-form-field>
+            </p>
+            <p class="col-md-12">
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Email"
+                  formControlName="email"
+                />  
+      
+                <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">
+                  Email is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.pattern">
+                Please introduce a valid email 
+                </mat-error>          
+      
+            </mat-form-field>
+            </p>
+            <p class="col-md-12">
             <mat-form-field>
               <input
                 matInput
-                placeholder="Name"
-                formControlName="name"
-              />      
-              <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">
-                Name is <strong>required</strong>
-              </mat-error>
-              <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && email.errors.minlength">
-                6 characters are required
-              </mat-error>              
-          </mat-form-field>
-          </p>
-          <p>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Surname"
-                formControlName="surname"
-              />      
-              <mat-error *ngIf="surname.invalid && (surname.dirty || surname.touched) && surname.errors.required">
-                Surname is <strong>required</strong>
-              </mat-error>
-              <mat-error *ngIf="surname.invalid && (surname.dirty || surname.touched) && surname.errors.minlength">
-                6 characters are required
-              </mat-error>              
-          </mat-form-field>
-          </p>
-          <p>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Email"
-                formControlName="email"
-              />  
+                placeholder="Password"
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password"
+              /> 
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     
-              <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">
-                Email is <strong>required</strong>
+              <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.required">
+                  Password is <strong>required</strong>
               </mat-error>
-              <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.pattern">
-               Please introduce a valid email 
-              </mat-error>          
-    
-          </mat-form-field>
+              <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.minlength">
+                  5 characters are required
+              </mat-error>
+            </mat-form-field>
           </p>
-        <p>
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Password"
-              [type]="hide ? 'password' : 'text'"
-              formControlName="password"
-            /> 
-            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-  
-            <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.required">
-                Password is <strong>required</strong>
-            </mat-error>
-            <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.minlength">
-                5 characters are required
-            </mat-error>
-          </mat-form-field>
-        </p>
-        <p>{{errorMessage}}</p>
-        <button type="submit" mat-raised-button  color="primary" [disabled]="!signUpForm.valid">SignUp</button>
-        <button #buttonToCloseDialog mat-button mat-dialog-close  color="primary" style="visibility: hidden;">close</button>
+          <p>{{errorMessage}}</p>
+          
+          <button class="col-md-12 btn-signup" type="submit" mat-raised-button  color="primary" [disabled]="!signUpForm.valid">SignUp</button>
+          <button #buttonToCloseDialog mat-button mat-dialog-close  color="primary" style="visibility: hidden;">close</button>
+      
       </form>
     </mat-card-content>
   </mat-card>

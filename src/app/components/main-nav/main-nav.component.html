@@ -11,9 +11,13 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="starships">Starship</a>      
-      <a mat-list-item routerLink="secretpage">Top secret</a>
-      <a mat-list-item *ngIf="!isAuthenticated" (click)="showLoginSideNav()">Log In</a>
+      <a mat-list-item 
+        [routerLink]="['/starships']" 
+        [routerLinkActive]="['is-active']">Starship</a>      
+      <a mat-list-item 
+        [routerLink]="['/secretpage']"
+        [routerLinkActive]="['is-active']">Top secret</a>
+      <a mat-list-item *ngIf="!isAuthenticated" (click)="showLoginSideNav()">Log in</a>
       <a mat-list-item *ngIf="isAuthenticated" (click)="logOut()">Log out</a>
     </mat-nav-list>
   </mat-sidenav>
@@ -27,7 +31,7 @@
     [opened]="isShowing"
     [disableClose]="true">
 
-    <mat-icon aria-hidden="false" class="closeicon" aria-label="close login" (click)="hideLoginSideNav()">close</mat-icon>
+    <mat-icon aria-hidden="false" class="close-icon" aria-label="close login" (click)="hideLoginSideNav()">close</mat-icon>
   <app-login></app-login>
 </mat-sidenav>
 
@@ -41,14 +45,21 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>star wars</span>
+      <span class="title">STAR WARS</span>
       <span class="spacer"></span>
-      <div [ngClass]="{hidden: (isHandset$ | async) === true}">
-        <a routerLink="starships">Starship</a>      
-        <a routerLink="secretpage">Top secret</a>
-        <a *ngIf="!isAuthenticated" (click)="showLoginSideNav()">Log In</a>
+
+      <div class="container-tabs" [ngClass]="{hidden: (isHandset$ | async) === true}">
+
+        <a  [routerLink]="['/starships']" 
+          [routerLinkActive]="['is-active']">Starship</a>
+
+        <a [routerLink]="['/secretpage']"
+        [routerLinkActive]="['is-active']">Top secret</a>
+
+        <a *ngIf="!isAuthenticated" (click)="showLoginSideNav()">Log in</a>
         <a *ngIf="isAuthenticated" (click)="logOut()">Log out</a>
       </div>
+
     </mat-toolbar>    
     <ng-content></ng-content>
   </mat-sidenav-content>
