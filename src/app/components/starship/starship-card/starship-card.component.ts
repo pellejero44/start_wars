@@ -13,13 +13,8 @@ export class StarshipCardComponent  {
 
   constructor(private starWarsService: StarWarsService,  private router: Router) { }
 
-  public getImageUrl():string {
-   return this.starWarsService.getImageUrl(this.starship.url);
-  }
-
   public goToDetail():void{
-    let id = this.starWarsService.getId(this.starship.url);
-    this.router.navigate(['starships', id]);
+    this.router.navigate(['starships', this.starship.id]);
   }
 
 }

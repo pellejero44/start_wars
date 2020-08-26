@@ -19,10 +19,15 @@ export class StarShipDetailComponent implements OnInit {
 
   private getStarshipById():void{
     this.route.params.subscribe((params) => {
-      this.starWarsService.getById(params['id']).subscribe((starship: Starship) => {   
+      this.starWarsService.getById(params['id']).subscribe((starship: Starship) => {  
+        console.log(starship) ;
         this.starship = starship;
       });
     });
+  }
+
+  changeSource(event: any): void{
+    event.target.src = '../../../../assets/images/notFound.jpg';
   }
 
 }

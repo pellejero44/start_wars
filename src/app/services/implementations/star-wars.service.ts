@@ -14,13 +14,30 @@ export class StarWarsService implements IStarWarsApi{
 
   constructor(private http: HttpClient) { }
 
+  private getImageUrl(urlStarShip:string):string{      
+    let url = `https://starwars-visualguide.com/assets/img/starships/${this.getId(urlStarShip)}.jpg`;
+    
+    return  url;
+  }
+  
     getAll(page: number): Observable<PaginatorStarship> {
       page++;
-      return this.http.get<PaginatorStarship>('http://swapi.dev/api/starships/?page='+ page);
+      return this.http.get<PaginatorStarship>('http://swapi.dev/api/starships/?page='+ page)
+          .map((response: PaginatorStarship) => {
+              response.results.map( item =>{
+                item.id = this.getId(item.url);
+                item.url= this.getImageUrl(item.url);                
+              });
+              return response;
+          });
     }
 
     getById(id: number): Observable<Starship> {
-      return this.http.get<Starship>('http://swapi.dev/api/starships/'+ id);
+      return this.http.get<Starship>('http://swapi.dev/api/starships/'+ id)
+        .map((response: Starship)=>{
+            response.url = this.getImageUrl(response.url);
+            return response;
+        });
     }
 
     getId(urlStarShip:string):string{
@@ -31,10 +48,6 @@ export class StarWarsService implements IStarWarsApi{
       return id;
     }
 
-    getImageUrl(urlStarShip:string):string{      
-      let url = `https://starwars-visualguide.com/assets/img/starships/${this.getId(urlStarShip)}.jpg`;
-      
-      return  url;
-    }
+   
  
 }

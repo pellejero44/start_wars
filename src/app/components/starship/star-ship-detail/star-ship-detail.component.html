@@ -1,6 +1,9 @@
  <div class="row">
             <div class="col-sm-12 col-xl-6">
-                <img src="../../../../assets/images/notFound.jpg" [alt]="starship.name" class="responsive">             
+                <img [src]="starship?.url"
+                (error) ="changeSource($event)" 
+                [alt]="starship?.name" 
+                class="responsive">             
             </div>
             <div class="col-sm-12 col-xl-6">
               <h3>{{starship?.name}}</h3>

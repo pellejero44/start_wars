@@ -1,4 +1,5 @@
 export class Starship {
+    id:string;
     name: string;
     url:string;
     manufacturer:string;
