@@ -54,3 +54,12 @@ a{
 .is-active {
   text-decoration: underline !important;
 }
+.title{
+  position: absolute;
+  width: 100%;
+  left: 0;
+  text-align: center;
+  margin: auto;
+  padding-top: 0 10px;
+  z-index: -111;
+}

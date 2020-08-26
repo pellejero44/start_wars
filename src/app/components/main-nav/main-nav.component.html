@@ -45,20 +45,25 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
+
       <span class="title">STAR WARS</span>
+
+      <div [ngClass]="{hidden: (isHandset$ | async) === true}">
+        <a  [routerLink]="['/starships']"  
+            [routerLinkActive]="['is-active']">Starship</a>
+
+        <a [routerLink]="['/secretpage']" 
+            [routerLinkActive]="['is-active']">Top secret</a>
+
+      </div>
+
       <span class="spacer"></span>
-
-      <div class="container-tabs" [ngClass]="{hidden: (isHandset$ | async) === true}">
-
-        <a  [routerLink]="['/starships']" 
-          [routerLinkActive]="['is-active']">Starship</a>
-
-        <a [routerLink]="['/secretpage']"
-        [routerLinkActive]="['is-active']">Top secret</a>
-
+      
+      <div [ngClass]="{hidden: (isHandset$ | async) === true}">
         <a *ngIf="!isAuthenticated" (click)="showLoginSideNav()">Log in</a>
         <a *ngIf="isAuthenticated" (click)="logOut()">Log out</a>
       </div>
+
 
     </mat-toolbar>    
     <ng-content></ng-content>
