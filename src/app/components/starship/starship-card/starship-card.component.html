@@ -1,6 +1,6 @@
 <mat-card>
-    <mat-card-header>
-        <mat-card-title>{{starship.name}}</mat-card-title>
-    </mat-card-header>
-    <img mat-card-image [attr.data-src]="getImageUrl()" (click)="goToDetail()">
+    <mat-card-content>
+        <div class="alignElement"><h3>{{starship.name}}</h3></div>
+        <img mat-card-image [attr.data-src]="getImageUrl()" (click)="goToDetail()">
+    </mat-card-content>
 </mat-card>
