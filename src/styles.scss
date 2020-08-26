@@ -29,7 +29,15 @@ body{
 
 mat-card{
     box-shadow: none !important;
+    mat-card-title,
+    mat-card-content {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    }
 }
+
+
 
 .btn-signup{
     color: #fff !important;

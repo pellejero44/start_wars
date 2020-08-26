@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { LogIn } from 'src/app/store/actions/auth.actions';
+import { LogIn, LogOut } from 'src/app/store/actions/auth.actions';
 import { User } from 'src/app/models/user';
 import { State } from 'src/app/store/reducers/auth.reducers';
 import { MatDialog } from '@angular/material/dialog';
@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
   }
 
   openSignUp():void{
+    this.store.dispatch(new LogOut({}));
     this.signupDialog.open(SignUpComponent, { disableClose: true });  
   }
 

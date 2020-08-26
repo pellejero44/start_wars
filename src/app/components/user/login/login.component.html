@@ -1,6 +1,9 @@
 <mat-card>
   <mat-card-title>Log in</mat-card-title>
   <mat-card-subtitle class="text-center"><span>Enter your email and password to access</span></mat-card-subtitle>
+  <div class="alert alert-danger" *ngIf="errorMessage != null" role="alert">
+    <p>{{errorMessage}}</p>
+  </div>
   <mat-card-content>
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <p>
@@ -37,8 +40,8 @@
             5 characters are required
           </mat-error>
         </mat-form-field>
-      </p>
-      <p>{{errorMessage}}</p>
+      </p>   
+      
       <button type="submit" mat-raised-button color="primary" class="btn-login" [disabled]="!loginForm.valid">Log in</button>
       <p>Dont you have an Account ?</p>
       <button mat-raised-button color="primary" class="btn-signup" (click)="openSignUp()">Create account</button>

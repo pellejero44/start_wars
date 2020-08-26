@@ -1,6 +1,9 @@
 <mat-card>
   <mat-icon aria-hidden="false" class="close-icon" aria-label="close login" (click)="closeDialog()">close</mat-icon>
     <mat-card-title>Sign up</mat-card-title>
+    <div class="alert alert-danger" *ngIf="errorMessage != null" role="alert">
+      <p>{{errorMessage}}</p>
+    </div>
     <mat-card-content>
       <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()" class="row">
           <p class="col-md-6">
@@ -68,9 +71,8 @@
               </mat-error>
             </mat-form-field>
           </p>
-          <p>{{errorMessage}}</p>
           
-          <button class="col-md-12 btn-signup" type="submit" mat-raised-button  color="primary" [disabled]="!signUpForm.valid">SignUp</button>
+          <button class="col-md-12 btn-signup" type="submit" mat-raised-button  color="primary" [disabled]="!signUpForm.valid">Sign up</button>
           <button #buttonToCloseDialog mat-button mat-dialog-close  color="primary" style="visibility: hidden;">close</button>
       
       </form>
