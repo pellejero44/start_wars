@@ -10,6 +10,8 @@ import { StarShipDetailComponent } from './star-ship-detail/star-ship-detail.com
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
 import { StarshipComponent } from './starship.component';
 import { MaterialModule } from 'src/app/material.module';
+import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
+import { UrlHandlerService } from 'src/app/services/url-handler.service';
 
 
 @NgModule({
@@ -26,6 +28,6 @@ import { MaterialModule } from 'src/app/material.module';
     MaterialModule,
     LazyLoadImagesModule,
   ],
-  providers: [AuthGuardService]
+  providers: [AuthGuardService, StarWarsService, UrlHandlerService]
 })
 export class StarshipModule { }

@@ -1,6 +1,6 @@
 <div class="image-list imageContainer" ldImages>
     <app-starship-card *ngFor="let starship of paginatorStarship?.results"
-    [starship]="starship"></app-starship-card>
+    [starship]="starship" title="click here to view details"></app-starship-card>
 </div>
 <mat-paginator [length]="paginatorStarship?.count"
                 [pageSize]="pagesize"
