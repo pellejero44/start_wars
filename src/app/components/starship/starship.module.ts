@@ -12,6 +12,7 @@ import { StarshipComponent } from './starship.component';
 import { MaterialModule } from 'src/app/material.module';
 import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
 import { UrlHandlerService } from 'src/app/services/url-handler.service';
+import { ErrorHandlerImageModule } from 'src/app/directives/onErrorImage/error-handler-Image-module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { UrlHandlerService } from 'src/app/services/url-handler.service';
     StarshipRoutingModule,
     MaterialModule,
     LazyLoadImagesModule,
+    ErrorHandlerImageModule
   ],
   providers: [AuthGuardService, StarWarsService, UrlHandlerService]
 })

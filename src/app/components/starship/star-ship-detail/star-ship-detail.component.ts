@@ -25,8 +25,4 @@ export class StarShipDetailComponent implements OnInit {
     });
   }
 
-  changeSource(event: any): void{
-    event.target.src = '../../../../assets/images/notFound.jpg';
-  }
-
 }

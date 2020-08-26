@@ -1,7 +1,7 @@
  <div class="row">
             <div class="col-sm-12 col-xl-6">
-                <img [src]="starship?.url"
-                (error) ="changeSource($event)" 
+                <img [src]="starship?.url" 
+                default="../../../assets/images/notFound.jpg"
                 [alt]="starship?.name" 
                 class="responsive">             
             </div>
