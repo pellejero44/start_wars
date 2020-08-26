@@ -1,25 +1,18 @@
-<button mat-raised-button color="primary" [routerLink]="['/starships']">Primary</button>
-<div class="row">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="col-md-6">
-            <div class="row">
-              <h3>Starship:</h3>
-              <!-- <img [src]="starship.image" [alt]="starship.name" class="img-rounded"> -->
+ <div class="row">
+            <div class="col-sm-12 col-xl-6">
+                <img src="../../../../assets/images/notFound.jpg" [alt]="starship.name" class="responsive">             
             </div>
-          </div>
-          <div class="col-md-6">
-            <h3>{{starship?.name}}</h3>
-            <p><b>Pasajeros:</b> {{starship?.passengers}}</p>
-            <p><b>Cargo capacidad:</b> {{starship?.cargo_capacity}}</p>
-            <p><b>Max velocidad admosferica:</b> {{starship?.max_atmosphering_speed}}</p>
-            <p><b>Tripulacion:</b> {{starship?.crew}}</p>
-            <p><b>Model:</b> {{starship?.model}}</p>
-            <p><b>Manufacturado:</b> {{starship?.manufacturer}}</p>
-            <p><b>Consumibles:</b> {{starship?.consumables}}</p>
-          </div>
-        </div>
-      </div>
+            <div class="col-sm-12 col-xl-6">
+              <h3>{{starship?.name}}</h3>
+              <p><b>Passengers:</b> {{starship?.passengers}}</p>
+              <p><b>Capacity:</b> {{starship?.cargo_capacity}}</p>
+              <p><b>Max atmosphering speed:</b> {{starship?.max_atmosphering_speed}}</p>
+              <p><b>Crew:</b> {{starship?.crew}}</p>
+              <p><b>Model:</b> {{starship?.model}}</p>
+              <p><b>Manufacturer:</b> {{starship?.manufacturer}}</p>
+              <p><b>Consumables:</b> {{starship?.consumables}}</p>
+              <p> Do you want to return to the list? </p>
+              <button mat-raised-button color="primary" [routerLink]="['/starships']"><span class="material-icons">keyboard_backspace</span></button>
+            </div>
+        
     </div>
-  </div>

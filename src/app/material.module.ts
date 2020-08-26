@@ -20,6 +20,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { LayoutModule } from '@angular/cdk/layout';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 const myModule = [
   MatCardModule,
@@ -42,6 +43,7 @@ const myModule = [
   LayoutModule,
   MatTabsModule,
   MatSnackBarModule,
+  MatGridListModule,
 ];
 
 @NgModule({
