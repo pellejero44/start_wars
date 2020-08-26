@@ -16,7 +16,7 @@
         [routerLinkActive]="['is-active']">Starship</a>      
       <a mat-list-item 
         [routerLink]="['/secretpage']"
-        [routerLinkActive]="['is-active']">Top secret</a>
+        [routerLinkActive]="['is-active']">Top secret <span *ngIf="!isAuthenticated">🔐</span></a>
       <a mat-list-item *ngIf="!isAuthenticated" (click)="showLoginSideNav()">Log in</a>
       <a mat-list-item *ngIf="isAuthenticated" (click)="logOut()">Log out</a>
     </mat-nav-list>
@@ -53,7 +53,7 @@
             [routerLinkActive]="['is-active']">Starship</a>
 
         <a [routerLink]="['/secretpage']" 
-            [routerLinkActive]="['is-active']">Top secret</a>
+            [routerLinkActive]="['is-active']">Top secret <span *ngIf="!isAuthenticated">🔐</span></a>
 
       </div>
 

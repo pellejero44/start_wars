@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/observable/of';
 import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
+import { MatSnackBar} from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 export class AuthService implements IAuthService {
 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private _snackBar: MatSnackBar) {
   }
 
   private getUsers(): any{
@@ -40,6 +41,13 @@ export class AuthService implements IAuthService {
     return false;
   }
 
+  private showLoginOrLogoutMessage(mssg:string, icon:string):void{
+    this._snackBar.open(mssg, icon,{
+      duration:2500,
+      verticalPosition: 'top',
+    });
+  }
+
   signUp(username: string, password: string): Observable<boolean> {
     if (username !== '' && password !== '') {
       if(this.userExist(username))
@@ -55,6 +63,7 @@ export class AuthService implements IAuthService {
     if (username !== '' && password !== '') {
       if(this.userCheckCredentials(username, password)){
         localStorage.isLoggedIn=true;
+        this.showLoginOrLogoutMessage('now you are log in!', '😊');
         return Observable.of(true);
       }
       else
@@ -73,6 +82,7 @@ export class AuthService implements IAuthService {
   }
 
   logout():void {
+    this.showLoginOrLogoutMessage('hope to see you soon!', '😔');
     localStorage.isLoggedIn=false;
     this.router.navigate(['starships']);
   }
