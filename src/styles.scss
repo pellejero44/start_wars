@@ -10,6 +10,7 @@ body{
  .mat-drawer-container{
     background-color: white !important;
  }
+
 .cdk-overlay-pane {
     position: absolute;
     pointer-events: auto;
@@ -21,9 +22,6 @@ body{
     max-height: 90%;
     text-align: left;
     padding: 0 55px;
-    mat-dialog-container{
-        padding: 20px 70px;
-    }
     .mat-form-field{
         width: 100%;
     }
