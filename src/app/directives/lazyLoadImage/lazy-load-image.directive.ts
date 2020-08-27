@@ -3,37 +3,37 @@ import { Directive, ElementRef, Renderer2, OnInit, OnDestroy, EventEmitter, Outp
 @Directive({
   selector: '[ldImages]'
 })
-export class LazyLoadImagesDirective implements OnInit, OnDestroy{
+export class LazyLoadImagesDirective implements OnInit, OnDestroy {
   private intersectionObserver: IntersectionObserver;
   private rootElement: HTMLElement;
-  @Output() inViewportChange = new EventEmitter<boolean>();
-  @Output() onLoadError = new EventEmitter<boolean>();
-  @Output() imagesInViewPortEmitter = new EventEmitter<void>();
-  
-  constructor(private element: ElementRef, private renderer: Renderer2) {
-      this.rootElement = element.nativeElement;
-    }
+  @Output() public inViewportChange = new EventEmitter<boolean>();
+  @Output() public loadErrorEmitter = new EventEmitter<boolean>();
+  @Output() public imagesInViewPortEmitter = new EventEmitter<void>();
 
-  ngOnInit() {
-    this.init()
+  constructor(private element: ElementRef, private renderer: Renderer2) {
+    this.rootElement = element.nativeElement;
   }
-  
-  ngOnDestroy() {
+
+  public ngOnInit() {
+    this.init();
+  }
+
+  public ngOnDestroy() {
     if (this.intersectionObserver) {
       this.intersectionObserver.disconnect();
     }
   }
 
-  private init():void {
-    this.registerIntersectionObserver();    
+  private init(): void {
+    this.registerIntersectionObserver();
     this.observeDOMChanges(this.rootElement);
   }
-  
+
   private registerIntersectionObserver(): IntersectionObserver {
     this.intersectionObserver = new IntersectionObserver(
       images => images.forEach(image => this.onIntersectionChange(image))
     );
-    
+
     return this.intersectionObserver;
   }
 
@@ -53,8 +53,8 @@ export class LazyLoadImagesDirective implements OnInit, OnDestroy{
 
     return observer;
   }
-  
-  private observeAllImagesInDOM():void {
+
+  private observeAllImagesInDOM(): void {
     const imagesFoundInDOM = this.getAllImagesToLazyLoad(this.rootElement);
     imagesFoundInDOM.forEach((image: HTMLElement) => this.intersectionObserver.observe(image));
   }
@@ -65,7 +65,7 @@ export class LazyLoadImagesDirective implements OnInit, OnDestroy{
 
   private onIntersectionChange(image: IntersectionObserverEntry) {
     if (!image.isIntersecting) {
-     this.imagesInViewPortEmitter.emit();
+      this.imagesInViewPortEmitter.emit();
       return;
     }
 
@@ -76,8 +76,8 @@ export class LazyLoadImagesDirective implements OnInit, OnDestroy{
     if (image.dataset.src) {
       this.renderer.setAttribute(image, 'src', image.dataset.src);
       this.renderer.listen(image, 'error', (event) => {
-          this.renderer.setAttribute(image, 'src', '/assets/images/notFound.jpg');
-          this.onLoadError.emit(true);
+        this.renderer.setAttribute(image, 'src', '/assets/images/notFound.jpg');
+        this.loadErrorEmitter.emit(true);
       });
       this.renderer.removeAttribute(image, 'data-src');
       this.inViewportChange.emit(true);
@@ -87,5 +87,4 @@ export class LazyLoadImagesDirective implements OnInit, OnDestroy{
       this.intersectionObserver.unobserve(image);
     }
   }
-
 }

@@ -11,27 +11,26 @@ import { UrlHandlerService } from '../url-handler.service';
 @Injectable({
   providedIn: 'root'
 })
-export class StarWarsService implements IStarWarsApi{
+export class StarWarsService implements IStarWarsApi {
 
-  constructor(private http: HttpClient, 
-    private urlHandlerService: UrlHandlerService) { }
-  
-    getAll(page: number): Observable<PaginatorStarship> {
-      page++;
-      return this.http.get<PaginatorStarship>('http://swapi.dev/api/starships/?page='+ page)
-          .map((response: PaginatorStarship) => {
-            response.results= this.urlHandlerService.urlHandler(response.results);
-            
-            return response;
-          });
-    }
+  constructor(private http: HttpClient, private urlHandlerService: UrlHandlerService) { }
 
-    getById(id: number): Observable<Starship> {
-      return this.http.get<Starship>('http://swapi.dev/api/starships/'+ id)
-        .map((response: Starship)=>{
-            response = this.urlHandlerService.urlHandler(response);
-            
-            return response;
-        });
-    }
+  getAll(page: number): Observable<PaginatorStarship> {
+    page++;
+    return this.http.get<PaginatorStarship>('http://swapi.dev/api/starships/?page=' + page)
+      .map((response: PaginatorStarship) => {
+        response.results = this.urlHandlerService.urlHandler(response.results);
+
+        return response;
+      });
+  }
+
+  getById(id: number): Observable<Starship> {
+    return this.http.get<Starship>('http://swapi.dev/api/starships/' + id)
+      .map((response: Starship) => {
+        response = this.urlHandlerService.urlHandler(response);
+
+        return response;
+      });
+  }
 }

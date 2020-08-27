@@ -7,11 +7,11 @@ import { StarshipComponent } from './starship.component';
 
 const routes: Routes = [
   {
-    path: 'starships', 
+    path: 'starships',
     component: StarshipComponent,
-    children:[
-      {path: '', component: StarShipListComponent},
-      {path: ':id', component: StarShipDetailComponent}
+    children: [
+      { path: '', component: StarShipListComponent },
+      { path: ':id', component: StarShipDetailComponent }
     ]
   }
 ];

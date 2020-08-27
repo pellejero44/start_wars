@@ -2,14 +2,11 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AuthService } from '../../services/implementations/auth.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-//ver cual es el nuevo of import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
 import { tap } from 'rxjs/operators';
 import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure } from '../actions/auth.actions';
-import { User } from 'src/app/models/user';
 
 @Injectable()
 export class AuthEffects {
@@ -18,7 +15,7 @@ export class AuthEffects {
         private actions: Actions,
         private authService: AuthService,
     ) { }
-    
+
     @Effect()
     LogIn: Observable<any> = this.actions
         .ofType(AuthActionTypes.LOGIN)
@@ -26,10 +23,12 @@ export class AuthEffects {
         .switchMap(payload => {
             return this.authService.login(payload.email, payload.password)
                 .map((res) => {
-                    if(res)
-                        return new LogInSuccess({ email: payload.email, password: payload.password  });
-                    else
+                    if (res) {
+                        return new LogInSuccess({ email: payload.email, password: payload.password });
+                    }
+                    else {
                         return new LogInFailure({});
+                    }
                 });
         });
 
@@ -42,7 +41,7 @@ export class AuthEffects {
     LogInFailure: Observable<any> = this.actions.pipe(
         ofType(AuthActionTypes.LOGIN_FAILURE)
     );
-    
+
     @Effect()
     SignUp: Observable<any> = this.actions
         .ofType(AuthActionTypes.SIGNUP)
@@ -50,10 +49,12 @@ export class AuthEffects {
         .switchMap(payload => {
             return this.authService.signUp(payload.email, payload.password)
                 .map((res) => {
-                    if(res)
+                    if (res) {
                         return new SignUpSuccess({ email: payload.email, password: payload.password });
-                    else
+                    }
+                    else {
                         return new SignUpFailure({});
+                    }
                 });
         });
 
@@ -61,7 +62,7 @@ export class AuthEffects {
     SignUpSuccess: Observable<any> = this.actions.pipe(
         ofType(AuthActionTypes.SIGNUP_SUCCESS),
         tap((res) => {
-            this.authService.setUsers( res.payload.email, res.payload.password);
+            this.authService.setUsers(res.payload.email, res.payload.password);
         })
     );
 
@@ -82,5 +83,5 @@ export class AuthEffects {
     UserHasAlreadyLoggedInBefore: Observable<any> = this.actions.pipe(
         ofType(AuthActionTypes.USER_HAS_ALREADY_LOGGED_IN_BEFORE)
     );
-
 }
+

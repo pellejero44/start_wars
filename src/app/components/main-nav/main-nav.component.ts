@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -12,47 +12,49 @@ import { selectAuthState } from 'src/app/store/app.states';
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.scss']
 })
-export class MainNavComponent implements OnInit{
+export class MainNavComponent implements OnInit {
 
-  getState: Observable<any>;
-  isAuthenticated: boolean;
-  isShowing:boolean;
-  
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  private getState: Observable<any>;
+  public isAuthenticated: boolean;
+  public isShowing: boolean;
+
+  public isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
-   
+
   constructor(private breakpointObserver: BreakpointObserver, private store: Store<State>) {
     this.getState = this.store.select(selectAuthState);
   }
-  
-  ngOnInit(): void {
-    this.isAuthenticated=false;
+
+  public ngOnInit(): void {
+    this.isAuthenticated = false;
     this.hideLoginSideNav();
 
-    this.getState.subscribe((state) => {    
-      if(state.canCloseLoginView != null){
-        if(state.canCloseLoginView)
-           this.hideLoginSideNav();
-        else 
-          this.showLoginSideNav()
+    this.getState.subscribe((state) => {
+      if (state.canCloseLoginView != null) {
+        if (state.canCloseLoginView) {
+          this.hideLoginSideNav();
+        }
+        else {
+          this.showLoginSideNav();
+        }
       }
-      this.isAuthenticated = state.isAuthenticated;  
+      this.isAuthenticated = state.isAuthenticated;
     });
   }
 
-  public showLoginSideNav():void{
-    this.isShowing=true;
+  public showLoginSideNav(): void {
+    this.isShowing = true;
   }
 
-  public hideLoginSideNav():void{
-    this.isShowing=false;
-  } 
+  public hideLoginSideNav(): void {
+    this.isShowing = false;
+  }
 
-  public logOut():void{
+  public logOut(): void {
     this.store.dispatch(new LogOut({}));
   }
- 
+
 }

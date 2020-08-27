@@ -9,16 +9,15 @@ import { UserHasAlreadyLoggedInBefore } from './store/actions/auth.actions';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
- 
-  title = 'star-wars-angel';
+export class AppComponent implements OnInit {
 
-  constructor(private store: Store<State>, public auth: AuthService){}
-  
-  ngOnInit(): void {
-    let isLoggedIn = this.auth.isLoggedIn();
-    if(isLoggedIn)
-      this.store.dispatch(new UserHasAlreadyLoggedInBefore({}))
+  constructor(private store: Store<State>, public auth: AuthService) { }
+
+  public ngOnInit(): void {
+    const isLoggedIn = this.auth.isLoggedIn();
+    if (isLoggedIn) {
+      this.store.dispatch(new UserHasAlreadyLoggedInBefore({}));
+    }
   }
 
 }

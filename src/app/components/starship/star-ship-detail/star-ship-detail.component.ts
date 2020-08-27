@@ -9,19 +9,18 @@ import { StarWarsService } from 'src/app/services/implementations/star-wars.serv
   styleUrls: ['./star-ship-detail.component.scss']
 })
 export class StarShipDetailComponent implements OnInit {
-  starship: Starship;
-  
+  public starship: Starship;
+
   constructor(private route: ActivatedRoute, private starWarsService: StarWarsService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getStarshipById();
   }
 
-  private getStarshipById():void{
-    this.route.params.subscribe((params) => {
-      this.starWarsService.getById(params['id']).subscribe((starship: Starship) => {  
-        this.starship = starship;
-      });
+  private getStarshipById(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.starWarsService.getById(id).subscribe((starship: Starship) => {
+      this.starship = starship;
     });
   }
 

@@ -5,9 +5,9 @@ import { AuthGuardService as AuthGuard } from 'src/app/services/auth-guard.servi
 
 const routes: Routes = [
   {
-    path: 'secretpage', 
-    component: SecretComponent,  
-    canActivate: [AuthGuard],      
+    path: 'secretpage',
+    component: SecretComponent,
+    canActivate: [AuthGuard],
   }
 ];
 

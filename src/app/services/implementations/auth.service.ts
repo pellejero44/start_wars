@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { IAuthService } from '../interfaces/i-auth-service';
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/of';
-import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
-import { MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from 'src/app/models/user';
+import { IAuthService } from '../interfaces/i-auth-service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,86 +12,91 @@ import { MatSnackBar} from '@angular/material/snack-bar';
 export class AuthService implements IAuthService {
 
 
-  constructor(private router: Router, private _snackBar: MatSnackBar) {
+  constructor(private router: Router, private snackBar: MatSnackBar) {
   }
 
-  private getUsers(): any{
-    let userList = localStorage.users;
-    if(!userList){
+  private getUsers(): any {
+    const userList = localStorage.users;
+    if (!userList) {
       localStorage.users = JSON.stringify([]);
     }
     return JSON.parse(localStorage.users);
   }
 
-  private userExist(email:string):boolean{
-    let users= this.getUsers();
-    for(let user of users){
-        if(user.email == email)
-          return true;
-    }
-    return false;
-  }
-
-  private userCheckCredentials(email:string, password: string):boolean{
-    let users= this.getUsers();
-    for(let user of users){
-      if(user.email == email && user.password == password)
+  private userExist(email: string): boolean {
+    const users = this.getUsers();
+    for (const user of users) {
+      if (user.email === email) {
         return true;
+      }
     }
     return false;
   }
 
-  private showLoginOrLogoutMessage(mssg:string, icon:string):void{
-    this._snackBar.open(mssg, icon,{
-      duration:2500,
+  private userCheckCredentials(email: string, password: string): boolean {
+    const users = this.getUsers();
+    for (const user of users) {
+      if (user.email === email && user.password === password) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private showLoginOrLogoutMessage(mssg: string, icon: string): void {
+    this.snackBar.open(mssg, icon, {
+      duration: 2500,
       verticalPosition: 'top',
     });
   }
 
-  signUp(username: string, password: string): Observable<boolean> {
+  public signUp(username: string, password: string): Observable<boolean> {
     if (username !== '' && password !== '') {
-      if(this.userExist(username))
+      if (this.userExist(username)) {
         return Observable.of(false);
-      else
-        return Observable.of(true);    
-    }else{
-      return Observable.of(false)
+      }
+      else {
+        return Observable.of(true);
+      }
+    } else {
+      return Observable.of(false);
     }
   }
 
-  login(username: string, password: string): Observable<boolean> {
+  public login(username: string, password: string): Observable<boolean> {
     if (username !== '' && password !== '') {
-      if(this.userCheckCredentials(username, password)){
-        localStorage.isLoggedIn=true;
+      if (this.userCheckCredentials(username, password)) {
+        localStorage.isLoggedIn = true;
         this.showLoginOrLogoutMessage('now you are log in!', '😊');
         return Observable.of(true);
       }
-      else
+      else {
         return Observable.of(false);
-    }else{
-      return Observable.of(false)
+      }
+    } else {
+      return Observable.of(false);
     }
   }
 
-  getUser(): any {
+  public getUser(): any {
     return localStorage.getItem('username');
   }
 
-  isLoggedIn(): boolean {
-    return localStorage.isLoggedIn === 'true' ? true: false;
+  public isLoggedIn(): boolean {
+    return localStorage.isLoggedIn === 'true' ? true : false;
   }
 
-  logout():void {
+  public logout(): void {
     this.showLoginOrLogoutMessage('hope to see you soon!', '😔');
-    localStorage.isLoggedIn=false;
+    localStorage.isLoggedIn = false;
     this.router.navigate(['starships']);
   }
 
-  public setUsers(email:string, password: string):void {
-    let newUser = new User(email, password);
-    let users = this.getUsers();
+  public setUsers(email: string, password: string): void {
+    const newUser = new User(email, password);
+    const users = this.getUsers();
     users.push(newUser);
     localStorage.users = JSON.stringify(users);
   }
-  
+
 }

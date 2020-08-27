@@ -1,18 +1,17 @@
 
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: 'img[default]',
-  host: {
-    '(error)':'updateUrl()',
-    '[src]':'src'
-   }
+  selector: 'img[default]'
 })
 export class ErrorHandlerImageDirective {
-  @Input() src:string;
-  @Input() default:string;
+  @Input() public default: string;
 
-  updateUrl() {
-    this.src = this.default;
+  constructor(private element: ElementRef) { }
+
+  @HostListener('error')
+  public updateUrl() {
+    const attribute = 'src';
+    this.element.nativeElement.attributes[attribute].value = this.default;
   }
 }

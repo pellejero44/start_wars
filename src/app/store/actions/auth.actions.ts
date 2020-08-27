@@ -63,4 +63,5 @@ export type All =
   | SignUpSuccess
   | SignUpFailure
   | LogOut
-  | UserHasAlreadyLoggedInBefore
+  | UserHasAlreadyLoggedInBefore;
+  

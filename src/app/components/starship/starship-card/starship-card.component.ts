@@ -7,13 +7,12 @@ import { Starship } from 'src/app/models/starship';
   templateUrl: './starship-card.component.html',
   styleUrls: ['./starship-card.component.scss']
 })
-export class StarshipCardComponent  {
-  @Input() starship: Starship;
+export class StarshipCardComponent {
+  @Input() public starship: Starship;
 
-  constructor( private router: Router) { }
+  constructor(private router: Router) { }
 
-  public goToDetail():void{
+  public goToDetail(): void {
     this.router.navigate(['starships', this.starship.id]);
   }
-
 }

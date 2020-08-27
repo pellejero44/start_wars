@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { LogIn, LogOut } from 'src/app/store/actions/auth.actions';
@@ -16,22 +16,26 @@ import { selectAuthState } from 'src/app/store/app.states';
 })
 export class LoginComponent implements OnInit {
   private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  private getState: Observable<any>;
   public loginForm: FormGroup;
   public hide = true;
-  getState: Observable<any>;
-  errorMessage: string | null;
-  
-  constructor(private store: Store<State>, private signupDialog: MatDialog) {
-      this.getState = this.store.select(selectAuthState);
-    }
+  public errorMessage: string | null;
 
-  ngOnInit() {
-    this.loginForm= this.createForm();
+  public get email() { return this.loginForm.get('email'); }
+  public get password() { return this.loginForm.get('password'); }
+
+  constructor(private store: Store<State>, private signupDialog: MatDialog) {
+    this.getState = this.store.select(selectAuthState);
+  }
+
+  public ngOnInit() {
+    this.loginForm = this.createForm();
 
     this.getState.subscribe((state) => {
       this.errorMessage = state.errorMessageLogin;
-      if(state.isAuthenticated)
+      if (state.isAuthenticated) {
         this.onResetForm();
+      }
     });
   }
 
@@ -42,23 +46,19 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  get email() { return this.loginForm.get('email'); }
-  get password() { return this.loginForm.get('password'); }
+  private onResetForm(): void {
+    this.loginForm.reset();
+  }
 
-  onLogin():void {
+  public onLogin(): void {
     if (this.loginForm.valid) {
-      let userLogin= new User(this.loginForm.value.email, this.loginForm.value.password);
+      const userLogin = new User(this.loginForm.value.email, this.loginForm.value.password);
       this.store.dispatch(new LogIn(userLogin));
     }
   }
 
-  onResetForm(): void {
-    this.loginForm.reset();
-  }
-
-  openSignUp():void{
+  public openSignUp(): void {
     this.store.dispatch(new LogOut({}));
-    this.signupDialog.open(SignUpComponent, { disableClose: true });  
+    this.signupDialog.open(SignUpComponent, { disableClose: true });
   }
-
 }

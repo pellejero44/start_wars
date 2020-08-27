@@ -15,7 +15,7 @@ import { SecretModule } from './components/secret/secret.module';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/effects/auth.effects';
 import { StoreModule } from '@ngrx/store';
-import {reducers} from './store/app.states';
+import { reducers } from './store/app.states';
 
 
 
@@ -26,14 +26,14 @@ import {reducers} from './store/app.states';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,    
+    BrowserAnimationsModule,
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([AuthEffects]),
     StarshipModule,
-    SecretModule,    
-    UserModule,  
+    SecretModule,
+    UserModule,
     MaterialModule,
-    AppRoutingModule,  
+    AppRoutingModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

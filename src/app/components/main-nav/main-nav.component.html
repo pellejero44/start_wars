@@ -4,7 +4,7 @@
   <mat-sidenav 
       #drawer
       class="sidenav"
-      [ngClass]="{hidden: !(isHandset$ | async) === true}"
+      [ngClass]="{hidden: (isHandset$ | async) === false}"
       fixedInViewport="false"
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"

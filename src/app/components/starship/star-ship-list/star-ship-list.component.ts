@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { PaginatorStarship } from 'src/app/models/paginator-starship';
 import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
-import { PageEvent} from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-star-ship-list',
@@ -9,31 +10,32 @@ import { PageEvent} from '@angular/material/paginator';
   styleUrls: ['./star-ship-list.component.scss']
 })
 export class StarShipListComponent implements OnInit {
- 
-  public page:number;
+
+  public page: number;
   public pagesize: number;
   public paginatorStarship: PaginatorStarship;
-  
+
   constructor(private starWarsService: StarWarsService) { }
 
-  ngOnInit(): void {
-    this.page=0;  
-    this.pagesize=0; 
+  public ngOnInit(): void {
+    this.page = 0;
+    this.pagesize = 0;
     this.getPage();
   }
 
-  public changePage(pageEv: PageEvent): void{
-    this.page = pageEv.pageIndex;   
-    
+  public changePage(pageEv: PageEvent): void {
+    this.page = pageEv.pageIndex;
+
     this.getPage();
   }
 
-  getPage():void{
+  public getPage(): void {
     this.starWarsService.getAll(this.page)
-    .subscribe((pageResult: PaginatorStarship)=> {
-      this.paginatorStarship = pageResult;
-      if(this.pagesize ==0)
-        this.pagesize = pageResult.results.length;
-    })
+      .subscribe((pageResult: PaginatorStarship) => {
+        this.paginatorStarship = pageResult;
+        if (this.pagesize === 0) {
+          this.pagesize = pageResult.results.length;
+        }
+      });
   }
 }
