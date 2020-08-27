@@ -64,16 +64,11 @@ export class SignUpComponent implements OnInit {
 
 
 
-  onSignUp(): void {
+  public onSignUp(): void {
     if (this.signUpForm.valid) {
       const userLogin = new User(this.signUpForm.value.email, this.signUpForm.value.password);
       this.store.dispatch(new SignUp(userLogin));
-      this.onResetForm();
     }
-  }
-
-  onResetForm(): void {
-    this.signUpForm.reset();
   }
 
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import 'rxjs/add/observable/of';
+import { of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/models/user';
@@ -53,13 +52,13 @@ export class AuthService implements IAuthService {
   public signUp(username: string, password: string): Observable<boolean> {
     if (username !== '' && password !== '') {
       if (this.userExist(username)) {
-        return Observable.of(false);
+        return of(false);
       }
       else {
-        return Observable.of(true);
+        return of(true);
       }
     } else {
-      return Observable.of(false);
+      return of(false);
     }
   }
 
@@ -68,13 +67,13 @@ export class AuthService implements IAuthService {
       if (this.userCheckCredentials(username, password)) {
         localStorage.isLoggedIn = true;
         this.showLoginOrLogoutMessage('now you are log in!', '😊');
-        return Observable.of(true);
+        return of(true);
       }
       else {
-        return Observable.of(false);
+        return of(false);
       }
     } else {
-      return Observable.of(false);
+      return of(false);
     }
   }
 
