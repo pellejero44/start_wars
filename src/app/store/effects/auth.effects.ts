@@ -18,9 +18,11 @@ export class AuthEffects {
         .ofType(AuthActionTypes.LOGIN).pipe
         (map((action: LogIn) => action.payload),
             switchMap(payload => {
-                return this.authService.login(payload.email, payload.password).pipe
+                return this.authService.logIn(payload.email, payload.password).pipe
                     (map((res) => {
+                        console.log('login '+ res);
                         if (res) {
+                            this.authService.logInResponse(res.token);
                             return new LogInSuccess({ email: payload.email, password: payload.password });
                         }
                         else {
@@ -45,23 +47,23 @@ export class AuthEffects {
         .ofType(AuthActionTypes.SIGNUP).pipe
         (map((action: SignUp) => action.payload),
             switchMap(payload => {
-                return this.authService.signUp(payload.email, payload.password).pipe(
+                return this.authService.signUp(payload).pipe(
                     map((res) => {
                         if (res) {
-                            return new SignUpSuccess({ email: payload.email, password: payload.password });
+                            return new SignUpSuccess({});
                         }
                         else {
                             return new SignUpFailure({});
                         }
                     }),
-                    catchError(err => of(new LogInFailure(err))));
+                    catchError(err => of(new SignUpFailure(err))));
             }));
 
     @Effect({ dispatch: false })
     SignUpSuccess: Observable<any> = this.actions.pipe(
         ofType(AuthActionTypes.SIGNUP_SUCCESS),
-        tap((res) => {
-            this.authService.setUsers(res.payload.email, res.payload.password);
+        tap(() => {
+            this.authService.signUpResponse();
         })
     );
 
@@ -74,7 +76,7 @@ export class AuthEffects {
     public LogOut: Observable<any> = this.actions.pipe(
         ofType(AuthActionTypes.LOGOUT),
         tap(() => {
-            this.authService.logout();
+            this.authService.logOutResponse();
         })
     );
 

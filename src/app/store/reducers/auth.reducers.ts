@@ -28,7 +28,8 @@ export function reducer(state = initialState, action: All): State {
         isAuthenticated: true,
         user: {
           email: action.payload.email,
-          password: action.payload.password
+          password: action.payload.password,
+          token: action.payload.token
         },
         errorMessageLogin: null,
         canCloseLoginView: true
@@ -47,7 +48,8 @@ export function reducer(state = initialState, action: All): State {
         isAuthenticated: false,
         user: {
           password: action.payload.password,
-          email: action.payload.email
+          email: action.payload.email,
+          token: null
         },
         errorMessageSignUp: null,
         canCloseSignUpView: true

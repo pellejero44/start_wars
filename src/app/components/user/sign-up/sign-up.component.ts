@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { SignUp } from 'src/app/store/actions/auth.actions';
@@ -27,7 +26,7 @@ export class SignUpComponent implements OnInit {
   public get email() { return this.signUpForm.get('email'); }
   public get password() { return this.signUpForm.get('password'); }
 
-  constructor(private store: Store<State>, private snackBar: MatSnackBar) {
+  constructor(private store: Store<State>) {
     this.getState = this.store.select(selectAuthState);
   }
 
@@ -36,13 +35,7 @@ export class SignUpComponent implements OnInit {
     this.getState.subscribe((state) => {
       this.errorMessage = state.errorMessageSignUp;
 
-      if (state.canCloseSignUpView) {
-
-        this.snackBar.open('your account has been created successfully', '', {
-          duration: 1500,
-          horizontalPosition: 'center',
-          verticalPosition: 'top'
-        });
+      if (state.canCloseSignUpView) {        
         this.closeDialog();
       }
 

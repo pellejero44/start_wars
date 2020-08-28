@@ -16,7 +16,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/effects/auth.effects';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './store/app.states';
-
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { MockFakeBackEndService } from './mockers/mock-fake-back-end.service';
 
 
 @NgModule({
@@ -34,8 +35,16 @@ import { reducers } from './store/app.states';
     UserModule,
     MaterialModule,
     AppRoutingModule,
+    HttpClientModule,
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MockFakeBackEndService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
