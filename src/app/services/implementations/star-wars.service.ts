@@ -28,7 +28,7 @@ export class StarWarsService implements IStarWarsApi {
   }
 
   getById(id: number): Observable<Starship> {
-    return this.http.get<Starship>({ url: `${environment.swapiUrl}/starships/?page=${id}`, cacheMins: 5 })
+    return this.http.get<Starship>({ url: `${environment.swapiUrl}/starships/${id}`, cacheMins: 5 })
       .pipe(map((response: Starship) => {
         response = this.urlHandlerService.urlHandler(response);
 

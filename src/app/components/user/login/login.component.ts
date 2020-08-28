@@ -58,7 +58,6 @@ export class LoginComponent implements OnInit {
   }
 
   public openSignUp(): void {
-    this.store.dispatch(new LogOut({}));
     this.signupDialog.open(SignUpComponent, { disableClose: true });
   }
 }
