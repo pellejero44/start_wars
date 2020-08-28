@@ -18,6 +18,8 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from './store/app.states';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MockFakeBackEndService } from './mockers/mock-fake-back-end.service';
+import { HttpClientService } from './services/htttp-client.service';
+import { CacheService } from './services/cache.service';
 
 
 @NgModule({
@@ -39,6 +41,8 @@ import { MockFakeBackEndService } from './mockers/mock-fake-back-end.service';
   ],
   providers: [
     AuthService,
+    HttpClientService,
+    CacheService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MockFakeBackEndService,

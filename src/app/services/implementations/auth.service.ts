@@ -34,7 +34,7 @@ export class AuthService implements IAuthService {
 
   public isLoggedIn(): boolean {
     const jwtToken = localStorage.getItem('jwtToken');
-    return jwtToken !== '' ? true : false;
+    return jwtToken !== null ? true : false;
   }
 
   public signUpResponse(): void {

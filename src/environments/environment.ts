@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   localUrl: 'http://localhost:4200',
-  swapiUrl: 'http://swapi.dev/api/',
+  swapiUrl: 'http://swapi.dev/api',
 };
 
 /*

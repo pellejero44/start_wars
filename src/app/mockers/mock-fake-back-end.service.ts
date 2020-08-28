@@ -36,17 +36,15 @@ export class MockFakeBackEndService implements HttpInterceptor {
         return error('Username "' + user.email + '" is already taken')
       }
 
-      user.password = 'password';
       users.push(user);
       localStorage.setItem('users', JSON.stringify(users));
 
-      console.log(user);
       return ok(user);
     }
 
     function logIn() {
       const { email, password } = body;
-      const user = users.find(x => x.email === email && password === password);
+      const user = users.find(x => x.email === email && x.password === password);
       if (!user) return error('Username or password is incorrect');
       user.token = 'fake-jwt-token';
       return ok(user)
