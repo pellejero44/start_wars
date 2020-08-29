@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { PaginatorStarship } from 'src/app/models/paginator-starship';
 import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
 
@@ -10,7 +10,7 @@ import { StarWarsService } from 'src/app/services/implementations/star-wars.serv
   styleUrls: ['./star-ship-list.component.scss']
 })
 export class StarShipListComponent implements OnInit {
-
+  @ViewChild(MatPaginator, { static: true}) paginator: MatPaginator;
   public page: number;
   public pagesize: number;
   public paginatorStarship: PaginatorStarship;

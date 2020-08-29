@@ -30,7 +30,6 @@ export class StarWarsService implements IStarWarsApi {
     return this.http.get<Starship>({ url: `${environment.swapiUrl}/starships/${id}`, cacheMins: 5 })
       .pipe(map((response: Starship) => {
         response = this.urlHandlerService.urlHandler(response);
-
         return response;
       }));
   }
