@@ -1,9 +1,8 @@
 import { Starship } from './starship';
 
-export class PaginatorStarship {
+export interface PaginatorStarship {
     count: number;
     next: string;
     previous: string;
     results: Array<Starship>;
 }
-

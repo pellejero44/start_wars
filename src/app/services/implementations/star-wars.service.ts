@@ -22,7 +22,6 @@ export class StarWarsService implements IStarWarsApi {
     return this.http.get<PaginatorStarship>({ url: `${environment.swapiUrl}/starships/?page=${page}`, cacheMins: 5 })
       .pipe(map((response: PaginatorStarship) => {
         response.results = this.urlHandlerService.urlHandler(response.results);
-
         return response;
       }));
   }

@@ -23,7 +23,7 @@ export class UrlHandlerService {
 
   public urlHandler(value: any): any {
     if (value instanceof Array) {
-      value.map((item) => {
+      value.map((item) => {       
         item.id = this.getId(item.url);
         item.url = this.getImageUrl(item.url);
       });
