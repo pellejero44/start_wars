@@ -13,13 +13,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MemoizedSelector, Store } from '@ngrx/store';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { State } from 'src/app/store/reducers/auth.reducers';
-import { AppState } from 'src/app/store/app.states';
+import { AppState, selectAuthState } from 'src/app/store/app.states';
+import { By } from '@angular/platform-browser';
 
 fdescribe('MainNavComponent', () => {
   let component: MainNavComponent;
   let fixture: ComponentFixture<MainNavComponent>;
   let mockStore: MockStore;
-  let mockUsernameSelector: MemoizedSelector<State, AppState>;
+  let mockAppStateSelector: MemoizedSelector<State, AppState>;
 
   beforeEach(async(() => {
 
@@ -64,6 +65,17 @@ fdescribe('MainNavComponent', () => {
 
   it('should compile', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render 2 href links. "/starships" and "/secretpage" in the HTML', () => {
+    
+    expect(fixture.nativeElement.parentNode.querySelector('[routerLink="/starships"]')).toBeTruthy();
+    expect(fixture.nativeElement.parentNode.querySelector('[routerLink="/secretpage"]')).toBeTruthy();
+  });
+
+  it('should render the "Login" action and display a locker icon next to "Top secret" tab', () => {
+    expect(fixture.debugElement.query(By.css('.locker'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('.logInLink'))).toBeTruthy();
   });
 
 });

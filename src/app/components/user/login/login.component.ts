@@ -17,7 +17,7 @@ import { selectAuthState } from 'src/app/store/app.states';
 export class LoginComponent implements OnInit, OnDestroy {
   private subcription: Subscription;
   private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  private getState: Observable<any>;
+  private getState$: Observable<any>;
   public loginForm: FormGroup;
   public hide = true;
   public errorMessage: string | null;
@@ -26,13 +26,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   public get password() { return this.loginForm.get('password'); }
 
   constructor(private store: Store<State>, private signupDialog: MatDialog) {
-    this.getState = this.store.pipe(select(selectAuthState));
+    this.getState$ = this.store.pipe(select(selectAuthState));
   }
 
   public ngOnInit() {
     this.loginForm = this.createForm();
 
-    this.subcription = this.getState.subscribe((state) => {
+    this.subcription = this.getState$.subscribe((state) => {
       this.errorMessage = state.errorMessageLogin;
       if (state.isAuthenticated) {
         this.onResetForm();

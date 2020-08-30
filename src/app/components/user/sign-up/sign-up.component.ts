@@ -14,7 +14,7 @@ import { selectAuthState } from 'src/app/store/app.states';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit, OnDestroy {
-  private getState: Observable<any>;
+  private getState$: Observable<any>;
   private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   public signUpForm: FormGroup;
   public hide = true;
@@ -27,12 +27,12 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public get password() { return this.signUpForm.get('password'); }
 
   constructor(private store: Store<State>) {
-    this.getState = this.store.pipe(select(selectAuthState));
+    this.getState$ = this.store.pipe(select(selectAuthState));
   }
 
   public ngOnInit(): void {
     this.signUpForm = this.createForm();
-    this.subcription = this.getState.subscribe((state) => {
+    this.subcription = this.getState$.subscribe((state) => {
       this.errorMessage = state.errorMessageSignUp;
 
       if (state.canCloseSignUpView) {

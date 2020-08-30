@@ -12,13 +12,13 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item 
-        [routerLink]="['/starships']" 
-        [routerLinkActive]="['is-active']">Starship</a>      
+        routerLink="/starships" 
+        routerLinkActive="is-active">Starship</a>      
       <a mat-list-item 
-        [routerLink]="['/secretpage']"
-        [routerLinkActive]="['is-active']">Top secret <span *ngIf="!isAuthenticated">🔐</span></a>
-      <a mat-list-item *ngIf="!isAuthenticated" (click)="showLoginSideNav()">Log in</a>
-      <a mat-list-item *ngIf="isAuthenticated" (click)="logOut()">Log out</a>
+        routerLink="/secretpage"
+        routerLinkActive="is-active">Top secret <span class="locker" *ngIf="!isAuthenticated">🔐</span></a>
+      <a mat-list-item class="logInLink" *ngIf="!isAuthenticated" (click)="showLoginSideNav()">Log in</a>
+      <a mat-list-item class="logOutLink" *ngIf="isAuthenticated" (click)="logOut()">Log out</a>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -49,19 +49,19 @@
       <span class="title">STAR WARS</span>
 
       <div [ngClass]="{hidden: (isHandset$ | async) === true}">
-        <a  [routerLink]="['/starships']"  
-            [routerLinkActive]="['is-active']">Starship</a>
+        <a  routerLink="/starships"  
+            routerLinkActive="is-active">Starship</a>
 
-        <a [routerLink]="['/secretpage']" 
-            [routerLinkActive]="['is-active']">Top secret <span *ngIf="!isAuthenticated">🔐</span></a>
+        <a routerLink="/secretpage" 
+            routerLinkActive="is-active">Top secret <span class="locker" *ngIf="!isAuthenticated">🔐</span></a>
 
       </div>
 
       <span class="spacer"></span>
       
       <div [ngClass]="{hidden: (isHandset$ | async) === true}">
-        <a *ngIf="!isAuthenticated" (click)="showLoginSideNav()">Log in</a>
-        <a *ngIf="isAuthenticated" (click)="logOut()">Log out</a>
+        <a *ngIf="!isAuthenticated" class="logInLink" (click)="showLoginSideNav()">Log in</a>
+        <a *ngIf="isAuthenticated" class="logOutLink" (click)="logOut()">Log out</a>
       </div>
 
 
