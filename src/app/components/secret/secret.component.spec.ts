@@ -22,4 +22,9 @@ describe('SecretComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render a paragraph in the HTML', () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelectorAll('p').length).toBe(1);
+  });
 });

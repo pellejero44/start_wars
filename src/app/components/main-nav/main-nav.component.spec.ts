@@ -8,8 +8,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { MainNavComponent } from './main-nav.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
-describe('MainNavComponent', () => {
+fdescribe('MainNavComponent', () => {
   let component: MainNavComponent;
   let fixture: ComponentFixture<MainNavComponent>;
 
@@ -18,6 +19,7 @@ describe('MainNavComponent', () => {
       declarations: [MainNavComponent],
       imports: [
         NoopAnimationsModule,
+        RouterTestingModule,
         LayoutModule,
         MatButtonModule,
         MatIconModule,
@@ -28,11 +30,11 @@ describe('MainNavComponent', () => {
     }).compileComponents();
   }));
 
-  // beforeEach(() => {
-  //   fixture = TestBed.createComponent(MainNavComponent);
-  //   component = fixture.componentInstance;
-  //   fixture.detectChanges();
-  // });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(MainNavComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
   // it('should compile', () => {
   //   expect(component).toBeTruthy();

@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
-fdescribe('StarShipDetailComponent', () => {
+describe('StarShipDetailComponent', () => {
   let component: StarShipDetailComponent;
   let fixture: ComponentFixture<StarShipDetailComponent>;
 
@@ -47,8 +47,9 @@ fdescribe('StarShipDetailComponent', () => {
     expect(href).toEqual('/starships');
   });
 
-  it('should render a image in the HTML', () => {
-    const href = fixture.debugElement.query(By.css('img')).nativeElement.getAttribute('href');
-    expect(href).toEqual('/starships');
+  it('should render a h3 and 8 paragraphs in the HTML', () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelectorAll('h3').length).toBe(1);
+    expect(compiled.querySelectorAll('p').length).toBe(8);
   });
 });

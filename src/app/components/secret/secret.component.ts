@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-secret',
   templateUrl: './secret.component.html',
   styleUrls: ['./secret.component.scss']
 })
-export class SecretComponent implements OnInit {
+export class SecretComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
