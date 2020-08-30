@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { LogIn, LogOut } from 'src/app/store/actions/auth.actions';
 import { User } from 'src/app/models/user';
 import { State } from 'src/app/store/reducers/auth.reducers';
 import { MatDialog } from '@angular/material/dialog';
 import { SignUpComponent } from '../sign-up/sign-up.component';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { selectAuthState } from 'src/app/store/app.states';
 
 @Component({
@@ -14,7 +14,8 @@ import { selectAuthState } from 'src/app/store/app.states';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+  private subcription: Subscription;
   private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   private getState: Observable<any>;
   public loginForm: FormGroup;
@@ -25,13 +26,13 @@ export class LoginComponent implements OnInit {
   public get password() { return this.loginForm.get('password'); }
 
   constructor(private store: Store<State>, private signupDialog: MatDialog) {
-    this.getState = this.store.select(selectAuthState);
+    this.getState = this.store.pipe(select(selectAuthState));
   }
 
   public ngOnInit() {
     this.loginForm = this.createForm();
 
-    this.getState.subscribe((state) => {
+    this.subcription = this.getState.subscribe((state) => {
       this.errorMessage = state.errorMessageLogin;
       if (state.isAuthenticated) {
         this.onResetForm();
@@ -59,5 +60,9 @@ export class LoginComponent implements OnInit {
 
   public openSignUp(): void {
     this.signupDialog.open(SignUpComponent, { disableClose: true });
+  }
+
+  public ngOnDestroy(): void {
+    this.subcription.unsubscribe();
   }
 }

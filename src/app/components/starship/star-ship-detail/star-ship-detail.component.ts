@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Starship } from 'src/app/models/starship';
 import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-star-ship-detail',
@@ -9,6 +10,7 @@ import { StarWarsService } from 'src/app/services/implementations/star-wars.serv
   styleUrls: ['./star-ship-detail.component.scss']
 })
 export class StarShipDetailComponent implements OnInit {
+  private subcription: Subscription;
   public starship: Starship;
 
   constructor(private route: ActivatedRoute, private starWarsService: StarWarsService) { }
@@ -19,9 +21,13 @@ export class StarShipDetailComponent implements OnInit {
 
   private getStarshipById(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.starWarsService.getById(id).subscribe((starship: Starship) => {
+    this.subcription = this.starWarsService.getById(id).subscribe((starship: Starship) => {
       this.starship = starship;
     });
   }
+
+  public ngOnDestroy(): void {
+    this.subcription.unsubscribe();
+   }
 
 }

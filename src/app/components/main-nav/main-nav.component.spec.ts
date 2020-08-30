@@ -8,13 +8,30 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { MainNavComponent } from './main-nav.component';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MemoizedSelector, Store } from '@ngrx/store';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { State } from 'src/app/store/reducers/auth.reducers';
+import { AppState } from 'src/app/store/app.states';
 
 fdescribe('MainNavComponent', () => {
   let component: MainNavComponent;
   let fixture: ComponentFixture<MainNavComponent>;
+  let mockStore: MockStore;
+  let mockUsernameSelector: MemoizedSelector<State, AppState>;
 
   beforeEach(async(() => {
+
+    const initialState: State = {
+      isAuthenticated: false,
+      user: null,
+      errorMessageLogin: null,
+      canCloseLoginView: null,
+      errorMessageSignUp: null,
+      canCloseSignUpView: null
+    };
+
     TestBed.configureTestingModule({
       declarations: [MainNavComponent],
       imports: [
@@ -26,17 +43,27 @@ fdescribe('MainNavComponent', () => {
         MatListModule,
         MatSidenavModule,
         MatToolbarModule,
-      ]
+      ],
+      providers: [
+        provideMockStore({ initialState })
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MainNavComponent);
     component = fixture.componentInstance;
+    mockStore = TestBed.inject(MockStore);
     fixture.detectChanges();
   });
 
-  // it('should compile', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  afterEach(() => { 
+    fixture.destroy();
+   });
+
+  it('should compile', () => {
+    expect(component).toBeTruthy();
+  });
+
 });

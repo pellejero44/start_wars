@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { LogOut } from 'src/app/store/actions/auth.actions';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/store/reducers/auth.reducers';
-import { selectAuthState } from 'src/app/store/app.states';
+import { selectAuthState, AppState } from 'src/app/store/app.states';
 
 @Component({
   selector: 'app-main-nav',
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.scss']
 })
-export class MainNavComponent implements OnInit {
-
-  private getState: Observable<any>;
+export class MainNavComponent implements OnInit, OnDestroy {
+  private subcription: Subscription;
+  private getState$: Observable<any>;
   public isAuthenticated: boolean;
   public isShowing: boolean;
 
@@ -25,23 +25,23 @@ export class MainNavComponent implements OnInit {
     );
 
   constructor(private breakpointObserver: BreakpointObserver, private store: Store<State>) {
-    this.getState = this.store.select(selectAuthState);
-  }
+    this.getState$ = this.store.pipe(select(selectAuthState));
+  }  
 
   public ngOnInit(): void {
     this.isAuthenticated = false;
     this.hideLoginSideNav();
 
-    this.getState.subscribe((state) => {
-      if (state.canCloseLoginView != null) {
-        if (state.canCloseLoginView) {
-          this.hideLoginSideNav();
+    this.subcription = this.getState$.subscribe((state) => {
+        if (state.canCloseLoginView != null) {
+          if (state.canCloseLoginView) {
+            this.hideLoginSideNav();
+          }
+          else {
+            this.showLoginSideNav();
+          }
         }
-        else {
-          this.showLoginSideNav();
-        }
-      }
-      this.isAuthenticated = state.isAuthenticated;
+        this.isAuthenticated = state.isAuthenticated;
     });
   }
 
@@ -55,6 +55,10 @@ export class MainNavComponent implements OnInit {
 
   public logOut(): void {
     this.store.dispatch(new LogOut({}));
+  }
+
+  ngOnDestroy(): void {
+   this.subcription.unsubscribe();
   }
 
 }

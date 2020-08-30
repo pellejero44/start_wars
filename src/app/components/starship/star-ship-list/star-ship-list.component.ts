@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { PaginatorStarship } from 'src/app/models/paginator-starship';
 import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -9,7 +10,8 @@ import { StarWarsService } from 'src/app/services/implementations/star-wars.serv
   templateUrl: './star-ship-list.component.html',
   styleUrls: ['./star-ship-list.component.scss']
 })
-export class StarShipListComponent implements OnInit {
+export class StarShipListComponent implements OnInit, OnDestroy {
+  private subcription: Subscription;
   @ViewChild(MatPaginator, { static: true}) paginator: MatPaginator;
   public page: number;
   public pagesize: number;
@@ -30,7 +32,7 @@ export class StarShipListComponent implements OnInit {
   }
 
   public getPage(): void {
-    this.starWarsService.getAll(this.page)
+    this.subcription = this.starWarsService.getAll(this.page)
       .subscribe((pageResult: PaginatorStarship) => {
         this.paginatorStarship = pageResult;
         if (this.pagesize === 0) {
@@ -38,4 +40,8 @@ export class StarShipListComponent implements OnInit {
         }
       });
   }
+
+  public ngOnDestroy(): void {
+    this.subcription.unsubscribe();
+   }
 }
