@@ -1,4 +1,5 @@
 import { PaginatorStarship } from '../models/paginator-starship';
+import { Starship } from '../models/starship';
 
 export const starshipPageBackEndResponse: PaginatorStarship = {
     "count": 36,
@@ -514,7 +515,7 @@ export const starshipPageExpectedRespone: PaginatorStarship = {
     ]
 }
 
-export const starshipDetailBackEndResponse = {
+export const starshipDetailBackEndResponse: Starship = {
     "name": "Sentinel-class landing craft",
     "model": "Sentinel-class landing craft",
     "manufacturer": "Sienar Fleet Systems, Cyngus Spaceworks",
@@ -537,7 +538,7 @@ export const starshipDetailBackEndResponse = {
     "url": "http://swapi.dev/api/starships/5/"
 };
 
-export const starshipDetailExpectedResponse = {
+export const starshipDetailExpectedResponse: Starship = {
     "name": "Sentinel-class landing craft",
     "model": "Sentinel-class landing craft",
     "manufacturer": "Sienar Fleet Systems, Cyngus Spaceworks",
