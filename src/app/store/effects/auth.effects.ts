@@ -14,13 +14,12 @@ export class AuthEffects {
     ) { }
 
     @Effect()
-    LogIn: Observable<any> = this.actions
-        .ofType(AuthActionTypes.LOGIN).pipe
-        (map((action: LogIn) => action.payload),
+    LogIn: Observable<any> = this.actions.pipe(
+        ofType(AuthActionTypes.LOGIN),
+        map((action: LogIn) => action.payload),
             switchMap(payload => {
                 return this.authService.logIn(payload.email, payload.password).pipe
                     (map((res) => {
-                        console.log('login '+ res);
                         if (res) {
                             this.authService.logInResponse(res.token);
                             return new LogInSuccess({ email: payload.email, password: payload.password });
@@ -43,9 +42,9 @@ export class AuthEffects {
     );
 
     @Effect()
-    SignUp: Observable<any> = this.actions
-        .ofType(AuthActionTypes.SIGNUP).pipe
-        (map((action: SignUp) => action.payload),
+    SignUp: Observable<any> = this.actions.pipe(
+        ofType(AuthActionTypes.SIGNUP),
+        map((action: SignUp) => action.payload),
             switchMap(payload => {
                 return this.authService.signUp(payload).pipe(
                     map((res) => {
