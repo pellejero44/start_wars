@@ -35,8 +35,8 @@ describe('StarShipListComponent', () => {
 
   it('should inject the StarWarsService',
     inject([StarWarsService], (injectedService: StarWarsService) => {
-      const StarWarsServiceTesBed = TestBed.inject(StarWarsService);
-      expect(injectedService).toBe(StarWarsServiceTesBed);
+      const starWarsServiceTestBed = TestBed.inject(StarWarsService);
+      expect(injectedService).toBe(starWarsServiceTestBed);
     }));
 
   it('should have "paginatorStarship" populated and start in the first page', () => {

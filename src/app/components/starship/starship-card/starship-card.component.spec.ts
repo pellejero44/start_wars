@@ -42,8 +42,8 @@ describe('StarshipCardComponent', () => {
 
   it('should inject Router',
   inject([Router], (router: Router) => {
-    const routerTesBed = TestBed.inject(Router);
-    expect(router).toBe(routerTesBed);
+    const routerTestBed = TestBed.inject(Router);
+    expect(router).toBe(routerTestBed);
   }));
 
   it('starships var should receive value from parent', () => {

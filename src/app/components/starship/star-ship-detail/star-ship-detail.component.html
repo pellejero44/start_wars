@@ -15,7 +15,9 @@
               <p><b>Manufacturer:</b> {{starship?.manufacturer}}</p>
               <p><b>Consumables:</b> {{starship?.consumables}}</p>
               <p> Do you want to return to the list? </p>
-              <button mat-raised-button color="primary" [routerLink]="['/starships']"><span class="material-icons">keyboard_backspace</span></button>
+              <a routerLink="/starships">
+                <span class="material-icons">keyboard_backspace</span>
+              </a>
             </div>
         
     </div>

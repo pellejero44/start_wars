@@ -11,8 +11,8 @@ import { Starship } from 'src/app/models/starship';
 
 describe('StarWarsService', () => {
   let service: StarWarsService;
-  let urlHandlerServiceTesbed: UrlHandlerService;
-  let httpClientServiceTesBed: HttpClientService;
+  let urlHandlerServiceTestBed: UrlHandlerService;
+  let httpClientServiceTestBed: HttpClientService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -24,9 +24,9 @@ describe('StarWarsService', () => {
     });
 
     service = TestBed.inject(StarWarsService);
-    urlHandlerServiceTesbed = TestBed.inject(UrlHandlerService);
-    httpClientServiceTesBed = TestBed.inject(HttpClientService);
-    spyOn(urlHandlerServiceTesbed, 'urlHandler').and.callThrough();
+    urlHandlerServiceTestBed = TestBed.inject(UrlHandlerService);
+    httpClientServiceTestBed = TestBed.inject(HttpClientService);
+    spyOn(urlHandlerServiceTestBed, 'urlHandler').and.callThrough();
   });
 
   it('should be created', () => {
@@ -35,19 +35,19 @@ describe('StarWarsService', () => {
 
   it('should inject the UrlHandlerService',
   inject([UrlHandlerService], (injectedService: UrlHandlerService)=>{   
-    expect(injectedService).toBe(urlHandlerServiceTesbed);
+    expect(injectedService).toBe(urlHandlerServiceTestBed);
   }));
 
   it('should inject the HttpClientService',
   inject([HttpClientService], (injectedService: HttpClientService)=>{   
-    expect(injectedService).toBe(httpClientServiceTesBed);
+    expect(injectedService).toBe(httpClientServiceTestBed);
   }));
 
   it('getAll() should return the expected data and call once to' + 
    'urlHandler method in the injected service of UrlHandlerService', () => {   
     service.getAll(1).subscribe((res: PaginatorStarship) => {   
        expect(res).toEqual(starshipPageExpectedRespone);
-       expect(urlHandlerServiceTesbed.urlHandler).toHaveBeenCalledTimes(1);
+       expect(urlHandlerServiceTestBed.urlHandler).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -55,7 +55,7 @@ describe('StarWarsService', () => {
   'urlHandler method in the injected service of UrlHandlerService', () => {
    service.getById(2).subscribe((res: Starship) => {   
       expect(res).toEqual(starshipDetailExpectedResponse);
-      expect(urlHandlerServiceTesbed.urlHandler).toHaveBeenCalledTimes(1);
+      expect(urlHandlerServiceTestBed.urlHandler).toHaveBeenCalledTimes(1);
    });
  });
 
