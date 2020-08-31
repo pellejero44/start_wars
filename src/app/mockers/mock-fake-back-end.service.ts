@@ -17,6 +17,7 @@ export class MockFakeBackEndService implements HttpInterceptor {
       .pipe(dematerialize());
 
     function handleRoute() {
+      users = JSON.parse(localStorage.getItem('users')) || [];
       switch (true) {
         case url.endsWith('/signup') && method === 'POST':
           return signUp();

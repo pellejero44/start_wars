@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./star-ship-detail.component.scss']
 })
 export class StarShipDetailComponent implements OnInit {
-  private subcription: Subscription;
+  private subscription: Subscription;
   public starship: Starship;
 
   constructor(private route: ActivatedRoute, private starWarsService: StarWarsService) { }
@@ -21,13 +21,13 @@ export class StarShipDetailComponent implements OnInit {
 
   private getStarshipById(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.subcription = this.starWarsService.getById(id).subscribe((starship: Starship) => {
+    this.subscription = this.starWarsService.getById(id).subscribe((starship: Starship) => {
       this.starship = starship;
     });
   }
 
   public ngOnDestroy(): void {
-    this.subcription.unsubscribe();
+    this.subscription.unsubscribe();
    }
 
 }

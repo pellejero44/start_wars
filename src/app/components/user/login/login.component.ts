@@ -15,7 +15,7 @@ import { selectAuthState } from 'src/app/store/app.states';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  private subcription: Subscription;
+  private subscription: Subscription;
   private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   private getState$: Observable<any>;
   public loginForm: FormGroup;
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.loginForm = this.createForm();
 
-    this.subcription = this.getState$.subscribe((state) => {
+    this.subscription = this.getState$.subscribe((state) => {
       this.errorMessage = state.errorMessageLogin;
       if (state.isAuthenticated) {
         this.onResetForm();
@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private onResetForm(): void {
     this.loginForm.reset();
-    this.loginForm.markAsUntouched;
   }
 
   public onLogin(): void {
@@ -66,6 +65,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.subcription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

@@ -7,7 +7,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { LoginComponent } from './login.component';
 
-fdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let mockStore: MockStore;
@@ -86,6 +86,12 @@ fdescribe('LoginComponent', () => {
     const loginElement = fixture.debugElement.query(By.css('form'));
     loginElement.triggerEventHandler('ngSubmit', component.loginForm);
     expect(component.onLogin).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call unsubscribe() on ngOnDestroy', () => {
+    const spy = spyOn(component['subscription'], 'unsubscribe').and.callThrough();
+    component.ngOnDestroy();
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
 });

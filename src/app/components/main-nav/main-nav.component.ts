@@ -13,7 +13,7 @@ import { selectAuthState, AppState } from 'src/app/store/app.states';
   styleUrls: ['./main-nav.component.scss']
 })
 export class MainNavComponent implements OnInit, OnDestroy {
-  private subcription: Subscription;
+  private subscription: Subscription;
   private getState$: Observable<any>;
   public isAuthenticated: boolean;
   public isShowing: boolean;
@@ -32,7 +32,7 @@ export class MainNavComponent implements OnInit, OnDestroy {
     this.isAuthenticated = false;
     this.hideLoginSideNav();
 
-    this.subcription = this.getState$.subscribe((state) => {
+    this.subscription = this.getState$.subscribe((state) => {
         if (state.canCloseLoginView != null) {
           if (state.canCloseLoginView) {
             this.hideLoginSideNav();
@@ -58,7 +58,7 @@ export class MainNavComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-   this.subcription.unsubscribe();
+   this.subscription.unsubscribe();
   }
 
 }

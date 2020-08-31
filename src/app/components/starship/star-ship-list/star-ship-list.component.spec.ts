@@ -76,4 +76,10 @@ describe('StarShipListComponent', () => {
     expect(component.page).toBe(0);
   });
 
+  it('should call unsubscribe() on ngOnDestroy', () => {
+    const spy = spyOn(component['subscription'], 'unsubscribe').and.callThrough();
+    component.ngOnDestroy();
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
 });

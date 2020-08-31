@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./star-ship-list.component.scss']
 })
 export class StarShipListComponent implements OnInit, OnDestroy {
-  private subcription: Subscription;
+  private subscription: Subscription;
   @ViewChild(MatPaginator, { static: true}) paginator: MatPaginator;
   public page: number;
   public pagesize: number;
@@ -32,7 +32,7 @@ export class StarShipListComponent implements OnInit, OnDestroy {
   }
 
   public getPage(): void {
-    this.subcription = this.starWarsService.getAll(this.page)
+    this.subscription = this.starWarsService.getAll(this.page)
       .subscribe((pageResult: PaginatorStarship) => {
         this.paginatorStarship = pageResult;
         if (this.pagesize === 0) {
@@ -42,6 +42,6 @@ export class StarShipListComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.subcription.unsubscribe();
+    this.subscription.unsubscribe();
    }
 }

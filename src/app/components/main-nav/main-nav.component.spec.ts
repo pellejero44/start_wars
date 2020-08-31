@@ -81,4 +81,21 @@ describe('MainNavComponent', () => {
     expect(fixture.debugElement.query(By.css('.logOutLink'))).toBeTruthy();
   });
 
+  it('should set true in var "isShowing" when showLoginSideNav method is called', () => {
+    component.showLoginSideNav();
+    expect(component.isShowing).toBeTrue();
+  });
+
+  it('should set dispatch  an action, when logOut method is called', () => {
+    spyOn(mockStore, 'dispatch').and.callThrough();
+    component.logOut();
+    expect(mockStore.dispatch).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call unsubscribe() on ngOnDestroy', () => {
+    const spy = spyOn(component['subscription'], 'unsubscribe').and.callThrough();
+    component.ngOnDestroy();
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
 });

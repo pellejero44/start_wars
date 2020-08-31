@@ -52,4 +52,10 @@ describe('StarShipDetailComponent', () => {
     expect(compiled.querySelectorAll('h3').length).toBe(1);
     expect(compiled.querySelectorAll('p').length).toBe(8);
   });
+
+  it('should call unsubscribe() on ngOnDestroy', () => {
+    const spy = spyOn(component['subscription'], 'unsubscribe').and.callThrough();
+    component.ngOnDestroy();
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 });
