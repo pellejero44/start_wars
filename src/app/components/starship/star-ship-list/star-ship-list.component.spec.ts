@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-
-import { StarShipListComponent } from './star-ship-list.component';
-import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
-import { StarWarsServiceMock } from 'src/app/mockers/star-wars.service-mock';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { StarShipListComponent } from './star-ship-list.component';
+import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
+import { StarWarsServiceMock } from 'src/app/mockers/star-wars.service-mock';
+
 
 describe('StarShipListComponent', () => {
   let component: StarShipListComponent;

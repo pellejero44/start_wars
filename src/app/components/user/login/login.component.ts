@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { LogIn, LogOut } from 'src/app/store/actions/auth.actions';
 import { User } from 'src/app/models/user';
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public get email() { return this.loginForm.get('email'); }
   public get password() { return this.loginForm.get('password'); }
 
-  constructor(private store: Store<State>, private signupDialog: MatDialog) {
+  constructor(private store: Store<State>, private signupDialog: MatDialog, private formBuilder: FormBuilder) {
     this.getState$ = this.store.pipe(select(selectAuthState));
   }
 
@@ -41,14 +41,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private createForm(): FormGroup {
-    return new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern(this.emailPattern)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(5)])
+    return this.formBuilder.group({
+      email: ['', [Validators.required, Validators.minLength(5), Validators.pattern(this.emailPattern)]],
+      password: ['', [Validators.required, Validators.minLength(5)]]
     });
+
+    
   }
 
   private onResetForm(): void {
     this.loginForm.reset();
+    this.loginForm.markAsUntouched;
   }
 
   public onLogin(): void {
