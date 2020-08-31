@@ -6,20 +6,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from './auth.service';
 import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
-import { HttpResponse } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-fdescribe('UserApiService', () => {
+describe('UserApiService', () => {
   let injector: TestBed;
   let service: AuthService;
   let httpMock: HttpTestingController;
   let routerSpy = { navigate: jasmine.createSpy('navigate') };
-
-  let users: User[] = JSON.parse(localStorage.getItem('users')) || [];
-  let user = new User('user@testing.es', 'testing');
-  users.push(user);
-  localStorage.setItem('users', JSON.stringify(users));
-
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -72,6 +65,7 @@ fdescribe('UserApiService', () => {
   });
 
   it('should return if the user is logged in, when isLoggedIn method is called', () => {
+    localStorage.removeItem('jwtToken');
     expect(service.isLoggedIn()).toBeFalse();
   });
 
