@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class StarShipListComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
-  @ViewChild(MatPaginator, { static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   public page: number;
   public pagesize: number;
   public paginatorStarship: PaginatorStarship;
@@ -43,5 +43,5 @@ export class StarShipListComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
-   }
+  }
 }

@@ -20,7 +20,7 @@ describe('AppComponent', () => {
       errorMessageSignUp: null,
       canCloseSignUpView: null
     };
-    
+
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
@@ -40,12 +40,11 @@ describe('AppComponent', () => {
   }));
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it('should check if user is logged in on component Init', () => {
+    localStorage.setItem('fakeToken', 'token');
     spyOn(mockStore, 'dispatch').and.callThrough();
     component.ngOnInit();
     expect(mockStore.dispatch).toHaveBeenCalledTimes(1);

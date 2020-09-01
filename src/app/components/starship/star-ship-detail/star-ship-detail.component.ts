@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Starship } from 'src/app/models/starship';
 import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './star-ship-detail.component.html',
   styleUrls: ['./star-ship-detail.component.scss']
 })
-export class StarShipDetailComponent implements OnInit {
+export class StarShipDetailComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   public starship: Starship;
 

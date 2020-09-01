@@ -50,11 +50,12 @@ describe('StarShipListComponent', () => {
   });
 
   it('should call getPage() method and getAll method of starWarsService on component Init', () => {
+    const privateMethod = 'starWarsService';
     spyOn(component, 'getPage').and.callThrough();
-    spyOn(component['starWarsService'], 'getAll').and.callThrough();
+    spyOn(component[privateMethod], 'getAll').and.callThrough();
     component.ngOnInit();
     expect(component.getPage).toHaveBeenCalled();
-    expect(component['starWarsService'].getAll).toHaveBeenCalled();
+    expect(component[privateMethod].getAll).toHaveBeenCalled();
   });
 
   it('should call one getPage() when next page event in paginator is fire', () => {
@@ -77,9 +78,13 @@ describe('StarShipListComponent', () => {
   });
 
   it('should call unsubscribe() on ngOnDestroy', () => {
-    const spy = spyOn(component['subscription'], 'unsubscribe').and.callThrough();
+    const privateVar = 'subscription';
+    const spy = spyOn(component[privateVar], 'unsubscribe').and.callThrough();
     component.ngOnDestroy();
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
 });
+
+
+

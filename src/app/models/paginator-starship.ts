@@ -6,3 +6,4 @@ export interface PaginatorStarship {
     previous: string;
     results: Array<Starship>;
 }
+

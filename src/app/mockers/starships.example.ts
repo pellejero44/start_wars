@@ -513,7 +513,7 @@ export const starshipPageExpectedRespone = {
             id: '17'
         }
     ]
-}
+};
 
 export const starshipDetailBackEndResponse: Starship = {
     name: 'Sentinel-class landing craft',
@@ -560,4 +560,5 @@ export const starshipDetailExpectedResponse: Starship = {
     edited: '2014-12-20T21:23:49.873000Z',
     url: 'https://starwars-visualguide.com/assets/img/starships/5.jpg',
     id: '5'
-}
+};
+

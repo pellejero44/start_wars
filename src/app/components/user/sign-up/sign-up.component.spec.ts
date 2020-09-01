@@ -55,48 +55,48 @@ describe('SignUpComponent', () => {
   });
 
   it('should validate name field', () => {
-    let name = component.name;
+    const name = component.name;
     expect(name.valid).toBeFalsy();
-    name.setValue("");
+    name.setValue('');
     expect(name.hasError('required')).toBeTruthy();
-    name.setValue("a");
+    name.setValue('a');
     expect(name.hasError('minlength')).toBeTruthy();
-    name.setValue("angel");
+    name.setValue('angel');
     expect(name.valid).toBeTruthy();
   });
 
   it('should validate surname field', () => {
-    let surname = component.surname;
+    const surname = component.surname;
     expect(surname.valid).toBeFalsy();
-    surname.setValue("");
+    surname.setValue('');
     expect(surname.hasError('required')).toBeTruthy();
-    surname.setValue("a");
+    surname.setValue('a');
     expect(surname.hasError('minlength')).toBeTruthy();
-    surname.setValue("angel");
+    surname.setValue('angel');
     expect(surname.valid).toBeTruthy();
   });
 
   it('should validate email field', () => {
-    let email = component.email;
+    const email = component.email;
     expect(email.valid).toBeFalsy();
-    email.setValue("");
+    email.setValue('');
     expect(email.hasError('required')).toBeTruthy();
-    email.setValue("dasdasdadsa");
-    email.setValue("a");
+    email.setValue('dasdasdadsa');
+    email.setValue('a');
     expect(email.hasError('minlength')).toBeTruthy();
     expect(email.hasError('pattern')).toBeTruthy();
-    email.setValue("angel@gmail.es");
+    email.setValue('angel@gmail.es');
     expect(email.valid).toBeTruthy();
   });
 
   it('should validate password field', () => {
-    let password = component.password;
+    const password = component.password;
     expect(password.valid).toBeFalsy();
-    password.setValue("");
+    password.setValue('');
     expect(password.hasError('required')).toBeTruthy();
-    password.setValue("a");
+    password.setValue('a');
     expect(password.hasError('minlength')).toBeTruthy();
-    password.setValue("angel");
+    password.setValue('angel');
     expect(password.valid).toBeTruthy();
   });
 
@@ -113,7 +113,8 @@ describe('SignUpComponent', () => {
   });
 
   it('should call unsubscribe() on ngOnDestroy', () => {
-    const spy = spyOn(component['subscription'], 'unsubscribe').and.callThrough();
+    const privateVar = 'subscription';
+    const spy = spyOn(component[privateVar], 'unsubscribe').and.callThrough();
     component.ngOnDestroy();
     expect(spy).toHaveBeenCalledTimes(1);
   });

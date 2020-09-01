@@ -1,6 +1,8 @@
 import { Directive, ElementRef, Renderer2, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 
+
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[ldImages]'
 })
 export class LazyLoadImagesDirective implements OnInit, OnDestroy {

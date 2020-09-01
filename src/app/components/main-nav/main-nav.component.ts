@@ -26,22 +26,22 @@ export class MainNavComponent implements OnInit, OnDestroy {
 
   constructor(private breakpointObserver: BreakpointObserver, private store: Store<State>) {
     this.getState$ = this.store.pipe(select(selectAuthState));
-  }  
+  }
 
   public ngOnInit(): void {
     this.isAuthenticated = false;
     this.hideLoginSideNav();
 
     this.subscription = this.getState$.subscribe((state) => {
-        if (state.canCloseLoginView != null) {
-          if (state.canCloseLoginView) {
-            this.hideLoginSideNav();
-          }
-          else {
-            this.showLoginSideNav();
-          }
+      if (state.canCloseLoginView != null) {
+        if (state.canCloseLoginView) {
+          this.hideLoginSideNav();
         }
-        this.isAuthenticated = state.isAuthenticated;
+        else {
+          this.showLoginSideNav();
+        }
+      }
+      this.isAuthenticated = state.isAuthenticated;
     });
   }
 
@@ -58,7 +58,7 @@ export class MainNavComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-   this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
 }

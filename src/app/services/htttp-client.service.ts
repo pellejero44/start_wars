@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
-import { CacheService } from './cache.service'
-import { Observable, of } from 'rxjs'
-import { switchMap } from 'rxjs/operators'
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { CacheService } from './cache.service';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 export enum Verbs {
   GET = 'GET',
@@ -16,37 +16,37 @@ export class HttpClientService {
 
   constructor(
     private http: HttpClient,
-    private _cacheService: CacheService,
+    private cacheService: CacheService,
   ) { }
 
   public get<T>(options: HttpOptions): Observable<T> {
-    return this.httpCall(Verbs.GET, options)
+    return this.httpCall(Verbs.GET, options);
   }
 
   public delete<T>(options: HttpOptions): Observable<T> {
-    return this.httpCall(Verbs.DELETE, options)
+    return this.httpCall(Verbs.DELETE, options);
   }
 
   public post<T>(options: HttpOptions): Observable<T> {
-    return this.httpCall(Verbs.POST, options)
+    return this.httpCall(Verbs.POST, options);
   }
 
   public put<T>(options: HttpOptions): Observable<T> {
-    return this.httpCall(Verbs.PUT, options)
+    return this.httpCall(Verbs.PUT, options);
   }
 
   private httpCall<T>(verb: Verbs, options: HttpOptions): Observable<T> {
 
     // Setup default values
-    options.body = options.body || null
-    options.cacheMins = options.cacheMins || 0
+    options.body = options.body || null;
+    options.cacheMins = options.cacheMins || 0;
 
     if (options.cacheMins > 0) {
       // Get data from cache
-      const data = this._cacheService.load(options.url)
+      const data = this.cacheService.load(options.url);
       // Return data from cache
       if (data !== null) {
-        return of<T>(data)
+        return of<T>(data);
       }
     }
 
@@ -57,20 +57,20 @@ export class HttpClientService {
         switchMap(response => {
           if (options.cacheMins > 0) {
             // Data will be cached
-            this._cacheService.save({
+            this.cacheService.save({
               key: options.url,
               data: response,
               expirationMins: options.cacheMins
-            })
+            });
           }
-          return of<T>(response)
+          return of<T>(response);
         })
-      )
+      );
   }
 }
 
 export class HttpOptions {
-  url: string
-  body?: any
-  cacheMins?: number
+  url: string;
+  body?: any;
+  cacheMins?: number;
 }

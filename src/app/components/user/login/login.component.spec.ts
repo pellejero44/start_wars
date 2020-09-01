@@ -55,26 +55,26 @@ describe('LoginComponent', () => {
   });
 
   it('should validate email field', () => {
-    let email = component.email;
+    const email = component.email;
     expect(email.valid).toBeFalsy();
-    email.setValue("");
+    email.setValue('');
     expect(email.hasError('required')).toBeTruthy();
-    email.setValue("dasdasdadsa");
-    email.setValue("a");
+    email.setValue('dasdasdadsa');
+    email.setValue('a');
     expect(email.hasError('minlength')).toBeTruthy();
     expect(email.hasError('pattern')).toBeTruthy();
-    email.setValue("angel@gmail.es");
+    email.setValue('angel@gmail.es');
     expect(email.valid).toBeTruthy();
   });
 
   it('should validate password field', () => {
-    let password = component.password;
+    const password = component.password;
     expect(password.valid).toBeFalsy();
-    password.setValue("");
+    password.setValue('');
     expect(password.hasError('required')).toBeTruthy();
-    password.setValue("a");
+    password.setValue('a');
     expect(password.hasError('minlength')).toBeTruthy();
-    password.setValue("angel");
+    password.setValue('angel');
     expect(password.valid).toBeTruthy();
   });
 
@@ -89,7 +89,8 @@ describe('LoginComponent', () => {
   });
 
   it('should call unsubscribe() on ngOnDestroy', () => {
-    const spy = spyOn(component['subscription'], 'unsubscribe').and.callThrough();
+    const privateVar = 'subscription';
+    const spy = spyOn(component[privateVar], 'unsubscribe').and.callThrough();
     component.ngOnDestroy();
     expect(spy).toHaveBeenCalledTimes(1);
   });

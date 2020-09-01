@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: ['', [Validators.required, Validators.minLength(5)]]
     });
 
-    
+
   }
 
   private onResetForm(): void {

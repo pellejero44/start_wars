@@ -21,7 +21,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public hide = true;
   public errorMessage: string | null;
   @ViewChild('buttonToCloseDialog', { read: ElementRef }) public buttonToCloseDialog: ElementRef;
-  
+
   public get name() { return this.signUpForm.get('name'); }
   public get surname() { return this.signUpForm.get('surname'); }
   public get email() { return this.signUpForm.get('email'); }

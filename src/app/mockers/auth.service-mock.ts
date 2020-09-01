@@ -1,8 +1,12 @@
+import { Injectable } from '@angular/core';
+
+@Injectable()
 export class AuthServiceMock {
-    isLogIn: boolean = true;
 
     public isLoggedIn(): boolean {
-        return this.isLogIn;
-    }  
+        const jwtToken = localStorage.getItem('fakeToken');
+        return jwtToken !== null ? true : false;
+    }
 }
-  
+
+

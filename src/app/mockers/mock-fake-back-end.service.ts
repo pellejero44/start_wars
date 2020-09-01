@@ -31,10 +31,9 @@ export class MockFakeBackEndService implements HttpInterceptor {
 
     function signUp() {
       const { user } = body;
-      console.log('5 ' + JSON.stringify(user));
 
       if (users.find(x => x.email === user.email)) {
-        return error('Username "' + user.email + '" is already taken')
+        return error('Username "' + user.email + '" is already taken');
       }
 
       users.push(user);
@@ -46,14 +45,16 @@ export class MockFakeBackEndService implements HttpInterceptor {
     function logIn() {
       const { email, password } = body;
       const user = users.find(x => x.email === email && x.password === password);
-      if (!user) return error('Username or password is incorrect');
+      if (!user) {
+        return error('Username or password is incorrect');
+      }
       user.token = 'fake-jwt-token';
-      return ok(user)
+      return ok(user);
     }
 
 
-    function ok(body?) {
-      return of(new HttpResponse({ status: 200, body }))
+    function ok(res?) {
+      return of(new HttpResponse({ status: 200, body: res }));
     }
 
     function error(message) {

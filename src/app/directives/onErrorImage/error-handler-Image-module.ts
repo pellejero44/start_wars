@@ -7,3 +7,4 @@ import {ErrorHandlerImageDirective} from './error-handler-image-directive';
   exports: [ErrorHandlerImageDirective]
 })
 export class ErrorHandlerImageModule { }
+

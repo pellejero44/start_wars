@@ -8,22 +8,22 @@ import { starshipDetailExpectedResponse } from 'src/app/mockers/starships.exampl
 
 
 @Component({
-  selector: 'test-component-wrapper',
+  selector: 'app-component-wrapper',
   template: '<app-starship-card [starship]="starship"></app-starship-card>'
 })
-class TestComponentWrapper {
+class TestComponent {
   starship: Starship = starshipDetailExpectedResponse;
 }
 
 describe('StarshipCardComponent', () => {
   let component: StarshipCardComponent;
-  let fixture: ComponentFixture<TestComponentWrapper>;
-  let routerSpy = { navigate: jasmine.createSpy('navigate') };
-  
+  let fixture: ComponentFixture<TestComponent>;
+  const routerSpy = { navigate: jasmine.createSpy('navigate') };
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TestComponentWrapper, StarshipCardComponent],
+      declarations: [TestComponent, StarshipCardComponent],
       providers: [{ provide: Router, useValue: routerSpy }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
@@ -31,7 +31,7 @@ describe('StarshipCardComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponentWrapper);
+    fixture = TestBed.createComponent(TestComponent);
     component = fixture.debugElement.children[0].componentInstance;
     fixture.detectChanges();
   });
@@ -41,10 +41,10 @@ describe('StarshipCardComponent', () => {
   });
 
   it('should inject Router',
-  inject([Router], (router: Router) => {
-    const routerTestBed = TestBed.inject(Router);
-    expect(router).toBe(routerTestBed);
-  }));
+    inject([Router], (router: Router) => {
+      const routerTestBed = TestBed.inject(Router);
+      expect(router).toBe(routerTestBed);
+    }));
 
   it('starships var should receive value from parent', () => {
     expect(component.starship).toBe(fixture.componentInstance.starship);
@@ -61,8 +61,10 @@ describe('StarshipCardComponent', () => {
     const leftMouseButton = 0;
     const firstLink = fixture.debugElement.query(By.css('mat-card'));
     firstLink.triggerEventHandler('click', { button: leftMouseButton });
-    expect (component.goToDetail).toHaveBeenCalled();
-    expect (routerSpy.navigate).toHaveBeenCalled();
-    expect (routerSpy.navigate).toHaveBeenCalledWith (['starships', component.starship.id]);
+    expect(component.goToDetail).toHaveBeenCalled();
+    expect(routerSpy.navigate).toHaveBeenCalled();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['starships', component.starship.id]);
   });
 });
+
+

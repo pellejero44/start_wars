@@ -12,7 +12,7 @@ describe('UserApiService', () => {
   let injector: TestBed;
   let service: AuthService;
   let httpMock: HttpTestingController;
-  let routerSpy = { navigate: jasmine.createSpy('navigate') };
+  const routerSpy = { navigate: jasmine.createSpy('navigate') };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -24,8 +24,8 @@ describe('UserApiService', () => {
       ],
     });
     injector = getTestBed();
-    service = injector.get(AuthService);
-    httpMock = injector.get(HttpTestingController);
+    service = TestBed.inject(AuthService);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
@@ -37,9 +37,9 @@ describe('UserApiService', () => {
   });
 
   it('should log in the user', () => {
-    let email = 'user@testing.es';
-    let password = 'testing';
-    let expectedResponse = new User('user@testing.es', 'testing');
+    const email = 'user@testing.es';
+    const password = 'testing';
+    const expectedResponse = new User('user@testing.es', 'testing');
 
     service.logIn('user@testing.es', 'testing').subscribe((res) => {
       expect(res).toEqual(expectedResponse);
@@ -53,8 +53,8 @@ describe('UserApiService', () => {
   });
 
   it('should sign up the user', () => {
-    let userBody = new User('user@testing.es', 'testing');
-    let expectedResponse = new User('user@testing.es', 'testing');
+    const userBody = new User('user@testing.es', 'testing');
+    const expectedResponse = new User('user@testing.es', 'testing');
 
     service.signUp(userBody).subscribe((res) => {
       expect(res).toEqual(expectedResponse);
@@ -81,8 +81,8 @@ describe('UserApiService', () => {
     service.logOutResponse();
     expect(spyMssg).toHaveBeenCalledTimes(1);
     expect(spyLocaltorage).toHaveBeenCalledTimes(1);
-    expect (routerSpy.navigate).toHaveBeenCalled();
-    expect (routerSpy.navigate).toHaveBeenCalledWith (['starships']);
+    expect(routerSpy.navigate).toHaveBeenCalled();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['starships']);
   });
 
   it('should add the token and return a message, when logInResponse method is called', () => {

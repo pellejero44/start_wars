@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 import { StarShipDetailComponent } from './star-ship-detail.component';
 import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
 import { StarWarsServiceMock } from 'src/app/mockers/star-wars.service-mock';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
@@ -12,16 +12,22 @@ describe('StarShipDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StarShipDetailComponent ],
+      declarations: [StarShipDetailComponent],
       providers: [
         { provide: StarWarsService, useClass: StarWarsServiceMock },
-        {provide: ActivatedRoute,
+        {
+          provide: ActivatedRoute,
           useValue: {
-            snapshot: { paramMap: {get:(id:number)=>{id:5}}}
-          }}],
-          imports: [RouterTestingModule],
+            snapshot: {
+              paramMap: convertToParamMap({
+                id: '5'
+              })
+            }
+          }
+        }],
+      imports: [RouterTestingModule],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -35,12 +41,12 @@ describe('StarShipDetailComponent', () => {
   });
 
   it('should inject the StarWarsService and ActivatedRoute',
-  inject([StarWarsService, ActivatedRoute], (injectedService: StarWarsService, activatedRoute: ActivatedRoute) => {
-    const starWarsServiceTestBed = TestBed.inject(StarWarsService);
-    const activatedRouteTestBed = TestBed.inject(ActivatedRoute);
-    expect(injectedService).toBe(starWarsServiceTestBed);
-    expect(activatedRouteTestBed).toBe(activatedRoute);
-  }));
+    inject([StarWarsService, ActivatedRoute], (injectedService: StarWarsService, activatedRoute: ActivatedRoute) => {
+      const starWarsServiceTestBed = TestBed.inject(StarWarsService);
+      const activatedRouteTestBed = TestBed.inject(ActivatedRoute);
+      expect(injectedService).toBe(starWarsServiceTestBed);
+      expect(activatedRouteTestBed).toBe(activatedRoute);
+    }));
 
   it('should render a link to "/starships" in the HTML', () => {
     const href = fixture.debugElement.query(By.css('a')).nativeElement.getAttribute('href');
@@ -54,8 +60,11 @@ describe('StarShipDetailComponent', () => {
   });
 
   it('should call unsubscribe() on ngOnDestroy', () => {
-    const spy = spyOn(component['subscription'], 'unsubscribe').and.callThrough();
+    const privateVar = 'subscription';
+    const spy = spyOn(component[privateVar], 'unsubscribe').and.callThrough();
     component.ngOnDestroy();
     expect(spy).toHaveBeenCalledTimes(1);
   });
 });
+
+

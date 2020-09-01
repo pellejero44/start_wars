@@ -20,6 +20,7 @@ describe('MainNavComponent', () => {
   let mockStore: MockStore;
 
   beforeEach(async(() => {
+
     const initialState: State = {
       isAuthenticated: false,
       user: null,
@@ -55,16 +56,16 @@ describe('MainNavComponent', () => {
     fixture.detectChanges();
   });
 
-  afterEach(() => { 
+  afterEach(() => {
     fixture.destroy();
-   });
+  });
 
   it('should compile', () => {
     expect(component).toBeTruthy();
   });
 
   it('should render 2 href links. "/starships" and "/secretpage" in the HTML', () => {
-    
+
     expect(fixture.nativeElement.parentNode.querySelector('[routerLink="/starships"]')).toBeTruthy();
     expect(fixture.nativeElement.parentNode.querySelector('[routerLink="/secretpage"]')).toBeTruthy();
   });
@@ -93,9 +94,12 @@ describe('MainNavComponent', () => {
   });
 
   it('should call unsubscribe() on ngOnDestroy', () => {
-    const spy = spyOn(component['subscription'], 'unsubscribe').and.callThrough();
+    const privateVar = 'subscription';
+    const spy = spyOn(component[privateVar], 'unsubscribe').and.callThrough();
     component.ngOnDestroy();
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
 });
+
+

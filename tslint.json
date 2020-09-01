@@ -20,12 +20,14 @@
       true,
       "attribute",
       "app",
+      "<%= prefix %>",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
       "app",
+      "<%= prefix %>",
       "kebab-case"
     ],
     "eofline": true,
