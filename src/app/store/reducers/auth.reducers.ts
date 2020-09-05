@@ -1,6 +1,6 @@
 import { User } from 'src/app/models/user';
-import { All, AuthActionTypes } from '../actions/auth.actions';
-
+import { createReducer, on, Action } from '@ngrx/store';
+import * as fromAuthActions from '../actions/auth.actions';
 
 export interface State {
   isAuthenticated: boolean;
@@ -20,60 +20,93 @@ export const initialState: State = {
   canCloseSignUpView: null
 };
 
-export function reducer(state = initialState, action: All): State {
-  switch (action.type) {
-    case AuthActionTypes.LOGIN_SUCCESS: {
-      return {
-        ...state,
-        isAuthenticated: true,
-        user: {
-          email: action.payload.email,
-          password: action.payload.password,
-          token: action.payload.token
-        },
-        errorMessageLogin: null,
-        canCloseLoginView: true
-      };
-    }
-    case AuthActionTypes.LOGIN_FAILURE: {
-      return {
-        ...state,
-        errorMessageLogin: 'Incorrect email and/or password.',
-        canCloseLoginView: false
-      };
-    }
-    case AuthActionTypes.SIGNUP_SUCCESS: {
-      return {
+const authReducer = createReducer(
+    initialState,
+    on(fromAuthActions.LogIn, (state, {user} ) => (
+      {
         ...state,
         isAuthenticated: false,
         user: {
-          password: action.payload.password,
-          email: action.payload.email,
+          email: user.email,
+          password: user.password,
+          token: user.token
+        },
+        errorMessageLogin: null,
+        canCloseLoginView: false
+      }
+    )),
+    on(fromAuthActions.LogInSuccess, (state, {user} )  => (
+      {
+        ...state,
+        isAuthenticated: true,
+        user: {
+          email: user.email,
+          password: user.password,
+          token: user.token
+        },
+        errorMessageLogin: null,
+        canCloseLoginView: true
+      }
+    )),
+    on(fromAuthActions.LogInFailure, state  => (
+      {
+        ...state,
+        errorMessageLogin: 'Username or password is incorrect',
+        canCloseLoginView: false
+      }
+    )),
+    on(fromAuthActions.SignUp, (state, {user} ) => (
+      {
+        ...state,
+        isAuthenticated: false,
+        user: {
+          email: user.email,
+          password: user.password,
+          token: null
+        },
+        errorMessageSignUp: null,
+        canCloseSignUpView: false
+      }
+    )),
+    on(fromAuthActions.SignUpSuccess, (state, {user} ) => (
+      {
+        ...state,
+        isAuthenticated: false,
+        user: {
+          email: user.email,
+          password: user.password,
           token: null
         },
         errorMessageSignUp: null,
         canCloseSignUpView: true
-      };
-    }
-    case AuthActionTypes.SIGNUP_FAILURE: {
-      return {
+      }
+    )),
+    on(fromAuthActions.SignUpFailure, state  => (
+      {
         ...state,
         errorMessageSignUp: 'That email is already in use.',
         canCloseSignUpView: false
-      };
-    }
-    case AuthActionTypes.LOGOUT: {
-      return initialState;
-    }
-    case AuthActionTypes.USER_HAS_ALREADY_LOGGED_IN_BEFORE: {
-      return {
+      }
+    )),
+    on(fromAuthActions.LogOut, state  => (
+      {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+        errorMessageLogin: null,
+        canCloseLoginView: null,
+        errorMessageSignUp: null,
+        canCloseSignUpView: null
+      }
+    )),
+    on(fromAuthActions.UserHasAlreadyLoggedInBefore, state  => (
+      {
         ...state,
         isAuthenticated: true
-      };
-    }
-    default: {
-      return state;
-    }
-  }
-}
+      }
+    ))
+);
 
+export function reducer(state: State | undefined, action: Action) {
+  return authReducer(state, action);
+}

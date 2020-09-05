@@ -20,7 +20,11 @@ import { CacheService } from './services/cache.service';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/effects/auth.effects';
 import { StoreModule } from '@ngrx/store';
-import { reducers } from './store/app.states';
+import {reducer} from '../app/store/reducers/auth.reducers'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+
+
 
 
 
@@ -31,15 +35,16 @@ import { reducers } from './store/app.states';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    StoreModule.forRoot(reducers, {}),
-    EffectsModule.forRoot([AuthEffects]),
+    BrowserAnimationsModule,   
     StarshipModule,
     SecretModule,
     UserModule,
     MaterialModule,
     AppRoutingModule,
     HttpClientModule,
+    StoreModule.forRoot({authReducer: reducer}),
+    EffectsModule.forRoot([AuthEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [
     AuthService,

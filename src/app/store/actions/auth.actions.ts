@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { User } from 'src/app/models/user';
 
 
@@ -13,55 +13,39 @@ export enum AuthActionTypes {
   USER_HAS_ALREADY_LOGGED_IN_BEFORE = '[Auth] User Has Already LoggedIn Before'
 }
 
-export class LogIn implements Action {
-  readonly type = AuthActionTypes.LOGIN;
-  constructor(public payload: User) { }
-}
+export const LogIn = createAction (
+  AuthActionTypes.LOGIN,
+  props<{user: User}>()
+);
 
-export class LogInSuccess implements Action {
-  readonly type = AuthActionTypes.LOGIN_SUCCESS;
-  constructor(public payload: any) { }
-}
+export const LogInSuccess = createAction (
+  AuthActionTypes.LOGIN_SUCCESS,
+  props<{user: User}>()
+);
 
-export class LogInFailure implements Action {
-  readonly type = AuthActionTypes.LOGIN_FAILURE;
-  constructor(public payload: any) { }
-}
-
-export class SignUp implements Action {
-  readonly type = AuthActionTypes.SIGNUP;
-  constructor(public payload: any) { }
-}
-
-export class SignUpSuccess implements Action {
-  readonly type = AuthActionTypes.SIGNUP_SUCCESS;
-  constructor(public payload: any) { }
-}
-
-export class SignUpFailure implements Action {
-  readonly type = AuthActionTypes.SIGNUP_FAILURE;
-  constructor(public payload: any) { }
-}
-
-export class LogOut implements Action {
-  readonly type = AuthActionTypes.LOGOUT;
-  constructor(public payload: any) { }
-}
-
-export class UserHasAlreadyLoggedInBefore implements Action {
-  readonly type = AuthActionTypes.USER_HAS_ALREADY_LOGGED_IN_BEFORE;
-  constructor(public payload: any) { }
-}
+export const LogInFailure = createAction (
+  AuthActionTypes.LOGIN_FAILURE
+);
 
 
+export const SignUp = createAction (
+  AuthActionTypes.SIGNUP,
+  props<{user: User}>()
+);
 
-export type All =
-  | LogIn
-  | LogInSuccess
-  | LogInFailure
-  | SignUp
-  | SignUpSuccess
-  | SignUpFailure
-  | LogOut
-  | UserHasAlreadyLoggedInBefore;
+export const SignUpSuccess = createAction (
+  AuthActionTypes.SIGNUP_SUCCESS,
+  props<{user: User}>()
+);
 
+export const SignUpFailure = createAction (
+  AuthActionTypes.SIGNUP_FAILURE
+);
+
+export const LogOut = createAction (
+  AuthActionTypes.LOGOUT
+);
+
+export const UserHasAlreadyLoggedInBefore = createAction (
+  AuthActionTypes.USER_HAS_ALREADY_LOGGED_IN_BEFORE
+);

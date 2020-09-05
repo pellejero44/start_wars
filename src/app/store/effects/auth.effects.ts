@@ -1,87 +1,104 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { of } from 'rxjs';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { AuthService } from '../../services/implementations/auth.service';
-import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure } from '../actions/auth.actions';
+import * as fromAuthActions from '../actions/auth.actions';
+import { User } from 'src/app/models/user';
 
 @Injectable()
 export class AuthEffects {
 
     constructor(
-        private actions: Actions,
+        private actions$: Actions,
         private authService: AuthService,
     ) { }
 
-    @Effect()
-    LogIn: Observable<any> = this.actions.pipe(
-        ofType(AuthActionTypes.LOGIN),
-        map((action: LogIn) => action.payload),
-            switchMap(payload => {
-                return this.authService.logIn(payload.email, payload.password).pipe
-                    (map((res) => {
-                        if (res) {
-                            this.authService.logInResponse(res.token);
-                            return new LogInSuccess({ email: payload.email, password: payload.password });
-                        }
-                        else {
-                            return new LogInFailure({});
+    login$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fromAuthActions.LogIn),
+            map((action) => action.user),
+            switchMap((payload: User) => {
+                return this.authService.logIn(payload.email, payload.password).pipe(
+                    map((user) => {
+                        if (user) {
+                            this.authService.logInResponse(user.token);
+                            return fromAuthActions.LogInSuccess({ user });
+                        } else {
+                            return fromAuthActions.LogInFailure();
                         }
                     }),
-                    catchError(err => of(new LogInFailure(err))));
-            }));
-
-    @Effect({ dispatch: false })
-    LogInSuccess: Observable<any> = this.actions.pipe(
-        ofType(AuthActionTypes.LOGIN_SUCCESS)
+                    catchError((error) => of(fromAuthActions.LogInFailure()))
+                )
+            })
+        )
     );
 
-    @Effect({ dispatch: false })
-    LogInFailure: Observable<any> = this.actions.pipe(
-        ofType(AuthActionTypes.LOGIN_FAILURE)
+    loginSuccess$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fromAuthActions.LogInSuccess)
+        ),
+        { dispatch: false }
     );
 
-    @Effect()
-    SignUp: Observable<any> = this.actions.pipe(
-        ofType(AuthActionTypes.SIGNUP),
-        map((action: SignUp) => action.payload),
-            switchMap(payload => {
+    logInFailure$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fromAuthActions.LogInFailure)
+        ),
+        { dispatch: false }
+    );
+
+    signUp$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fromAuthActions.SignUp),
+            map((action) => action.user),
+            switchMap((payload: User) => {
                 return this.authService.signUp(payload).pipe(
-                    map((res) => {
-                        if (res) {
-                            return new SignUpSuccess({});
-                        }
-                        else {
-                            return new SignUpFailure({});
+                    map((user) => {
+                        if (user) {
+                            return fromAuthActions.SignUpSuccess({ user });
+                        } else {
+                            return fromAuthActions.SignUpFailure({ 'errorMssg': 'not Found' });
                         }
                     }),
-                    catchError(err => of(new SignUpFailure(err))));
-            }));
-
-    @Effect({ dispatch: false })
-    SignUpSuccess: Observable<any> = this.actions.pipe(
-        ofType(AuthActionTypes.SIGNUP_SUCCESS),
-        tap(() => {
-            this.authService.signUpResponse();
-        })
+                    catchError((error) => of(fromAuthActions.SignUpFailure({ errorMssg: error })))
+                )
+            })
+        )
     );
 
-    @Effect({ dispatch: false })
-    SignUpFailure: Observable<any> = this.actions.pipe(
-        ofType(AuthActionTypes.SIGNUP_FAILURE)
+    signUpSuccess$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fromAuthActions.SignUpSuccess),
+            tap(() => {
+                this.authService.signUpResponse();
+            })
+        ),
+        { dispatch: false }
     );
 
-    @Effect({ dispatch: false })
-    public LogOut: Observable<any> = this.actions.pipe(
-        ofType(AuthActionTypes.LOGOUT),
-        tap(() => {
-            this.authService.logOutResponse();
-        })
+    signUpFailure$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fromAuthActions.SignUpFailure)
+        ),
+        { dispatch: false }
     );
 
-    @Effect({ dispatch: false })
-    UserHasAlreadyLoggedInBefore: Observable<any> = this.actions.pipe(
-        ofType(AuthActionTypes.USER_HAS_ALREADY_LOGGED_IN_BEFORE)
+    logOut$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fromAuthActions.LogOut),
+            tap(() => {
+                this.authService.logOutResponse();
+            })
+        ),
+        { dispatch: false }
+    );
+
+    userHasAlreadyLoggedInBefore$ = createEffect(() =>
+    this.actions$.pipe(
+        ofType(fromAuthActions.UserHasAlreadyLoggedInBefore)
+        ),
+        { dispatch: false }
     );
 }
 

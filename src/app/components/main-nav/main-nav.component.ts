@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { LogOut } from 'src/app/store/actions/auth.actions';
 import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/store/reducers/auth.reducers';
-import { selectAuthState, AppState } from 'src/app/store/app.states';
+import { selectAuthState } from 'src/app/store/app.states';
+import * as fromAuthActions from 'src/app/store/actions/auth.actions';
 
 @Component({
   selector: 'app-main-nav',
@@ -54,7 +54,7 @@ export class MainNavComponent implements OnInit, OnDestroy {
   }
 
   public logOut(): void {
-    this.store.dispatch(new LogOut({}));
+    this.store.dispatch(fromAuthActions.LogOut());
   }
 
   ngOnDestroy(): void {

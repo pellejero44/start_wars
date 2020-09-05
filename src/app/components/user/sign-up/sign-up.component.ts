@@ -6,7 +6,7 @@ import { SignUp } from 'src/app/store/actions/auth.actions';
 import { User } from 'src/app/models/user';
 import { State } from 'src/app/store/reducers/auth.reducers';
 import { selectAuthState } from 'src/app/store/app.states';
-
+import * as fromAuthActions from 'src/app/store/actions/auth.actions';
 
 @Component({
   selector: 'app-sign-up',
@@ -61,7 +61,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public onSignUp(): void {
     if (this.signUpForm.valid) {
       const userLogin = new User(this.signUpForm.value.email, this.signUpForm.value.password);
-      this.store.dispatch(new SignUp(userLogin));
+      this.store.dispatch(fromAuthActions.SignUp({user: userLogin}));
     }
   }
 

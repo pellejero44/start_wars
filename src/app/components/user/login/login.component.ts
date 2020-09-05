@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import { LogIn, LogOut } from 'src/app/store/actions/auth.actions';
 import { User } from 'src/app/models/user';
 import { State } from 'src/app/store/reducers/auth.reducers';
 import { MatDialog } from '@angular/material/dialog';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { Observable, Subscription } from 'rxjs';
+import * as fromAuthActions from 'src/app/store/actions/auth.actions';
 import { selectAuthState } from 'src/app/store/app.states';
 
 @Component({
@@ -21,12 +21,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   public hide = true;
   public errorMessage: string | null;
+ 
 
   public get email() { return this.loginForm.get('email'); }
   public get password() { return this.loginForm.get('password'); }
 
   constructor(private store: Store<State>, private signupDialog: MatDialog, private formBuilder: FormBuilder) {
-    this.getState$ = this.store.pipe(select(selectAuthState));
+    this.getState$ = this.store.pipe(select(selectAuthState));   
   }
 
   public ngOnInit() {
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public onLogin(): void {
     if (this.loginForm.valid) {
       const userLogin = new User(this.loginForm.value.email, this.loginForm.value.password);
-      this.store.dispatch(new LogIn(userLogin));
+      this.store.dispatch(fromAuthActions.LogIn({user: userLogin}));
     }
   }
 
