@@ -58,10 +58,10 @@ export class AuthEffects {
                         if (user) {
                             return fromAuthActions.SignUpSuccess({ user });
                         } else {
-                            return fromAuthActions.SignUpFailure({ 'errorMssg': 'not Found' });
+                            return fromAuthActions.SignUpFailure();
                         }
                     }),
-                    catchError((error) => of(fromAuthActions.SignUpFailure({ errorMssg: error })))
+                    catchError((error) => of(fromAuthActions.SignUpFailure()))
                 )
             })
         )
