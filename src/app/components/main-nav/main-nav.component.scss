@@ -1,5 +1,19 @@
 .sidenav-container {
   height: 100%;
+  .mat-sidenav-content{
+    .mat-toolbar{
+      position: fixed !important;
+      height: 9%;      
+    }
+    .app-main-content{
+      position: fixed !important; 
+      top: 9%;
+      height: 91%;
+      width: 100%;
+      overflow-y: scroll;
+    }
+  }
+
 }
 
 .sidenav {
@@ -13,10 +27,6 @@
 
 .mat-toolbar.mat-primary {
   background-color: white;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  height: 50px;
   color:black;
   font-family: "BasisGrotesque-Regular-Pro";
   font-weight: inherit;
@@ -63,3 +73,4 @@ a{
   padding-top: 0 10px;
   z-index: -111;
 }
+
