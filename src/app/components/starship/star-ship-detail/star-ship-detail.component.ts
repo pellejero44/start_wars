@@ -1,17 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Starship } from 'src/app/models/starship';
 import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-star-ship-detail',
   templateUrl: './star-ship-detail.component.html',
   styleUrls: ['./star-ship-detail.component.scss']
 })
-export class StarShipDetailComponent implements OnInit, OnDestroy {
-  private subscription: Subscription;
-  public starship: Starship;
+export class StarShipDetailComponent implements OnInit {
+  public starship$: Observable<Starship>;
 
   constructor(private route: ActivatedRoute, private starWarsService: StarWarsService) { }
 
@@ -21,13 +20,7 @@ export class StarShipDetailComponent implements OnInit, OnDestroy {
 
   private getStarshipById(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.subscription = this.starWarsService.getById(id).subscribe((starship: Starship) => {
-      this.starship = starship;
-    });
+    this.starship$ = this.starWarsService.getById(id);
   }
-
-  public ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-   }
 
 }

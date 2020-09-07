@@ -1,23 +1,30 @@
- <div class="row">
-            <div class="col-sm-12 col-xl-6">
-                <img [src]="starship?.url" 
-                default="../../../assets/images/notFound.jpg"
-                [alt]="starship?.name" 
-                class="responsive">             
-            </div>
-            <div class="col-sm-12 col-xl-6">
-              <h3>{{starship?.name}}</h3>
-              <p><b>Passengers:</b> {{starship?.passengers}}</p>
-              <p><b>Capacity:</b> {{starship?.cargo_capacity}}</p>
-              <p><b>Max atmosphering speed:</b> {{starship?.max_atmosphering_speed}}</p>
-              <p><b>Crew:</b> {{starship?.crew}}</p>
-              <p><b>Model:</b> {{starship?.model}}</p>
-              <p><b>Manufacturer:</b> {{starship?.manufacturer}}</p>
-              <p><b>Consumables:</b> {{starship?.consumables}}</p>
-              <p> Do you want to return to the list? </p>
-              <a routerLink="/starships">
-                <span class="material-icons">keyboard_backspace</span>
-              </a>
-            </div>
-        
-    </div>
+ <div class="row" *ngIf="starship$ | async; let starship;">
+      <div class="col-sm-12 col-xl-6">
+          <img [src]="starship?.url" 
+          default="../../../assets/images/notFound.jpg"
+          [alt]="starship?.name" 
+          class="responsive">             
+      </div>
+      <div class="col-sm-12 col-xl-6">
+        <h3>{{starship?.name}}</h3>
+        <p><b>Passengers:</b> {{starship?.passengers}}</p>
+        <p><b>Capacity:</b> {{starship?.cargo_capacity}}</p>
+        <p><b>Max atmosphering speed:</b> {{starship?.max_atmosphering_speed}}</p>
+        <p><b>Crew:</b> {{starship?.crew}}</p>
+        <p><b>Model:</b> {{starship?.model}}</p>
+        <p><b>Manufacturer:</b> {{starship?.manufacturer}}</p>
+        <p><b>Consumables:</b> {{starship?.consumables}}</p>
+        <p> Do you want to return to the list? </p>
+        <a routerLink="/starships">
+          <span class="material-icons">keyboard_backspace</span>
+        </a>
+      </div>  
+</div> 
+
+
+  <div *ngIf="!(starship$ | async)" class="spinner-wrapper">
+      <mat-progress-spinner 
+      color="primary" 
+      mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
