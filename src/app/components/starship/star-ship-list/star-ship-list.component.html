@@ -1,12 +1,16 @@
-<div class="image-list imageContainer" ldImages>
-    <app-starship-card *ngFor="let starship of paginatorStarship?.results"
-    [starship]="starship" title="click here to view details"></app-starship-card>
+<div class="image-list imageContainer" ldImages *ngIf="paginatorStarship$ | async; let paginatorStarship;">
+    <app-starship-card *ngFor="let starship of paginatorStarship?.results" [starship]="starship"
+        title="click here to view details"></app-starship-card>
 </div>
+
 <div class="footer">
-    <mat-paginator #paginator [length]="paginatorStarship?.count"
-                                [pageSize]="pagesize"
-                                showFirstLastButtons
-                                [hidePageSize]="true"
-                                (page)="changePage($event)">
+
+    <mat-paginator #paginator [length]="paginatorLength" [pageSize]="pagesize" showFirstLastButtons
+        [hidePageSize]="true" (page)="changePage($event)">
     </mat-paginator>
+</div>
+
+<div *ngIf="!(paginatorStarship$ | async)" class="spinner-wrapper">
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
 </div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 
 import { IStarWarsApi } from '../interfaces/i-star-wars-api';
 import { PaginatorStarship } from 'src/app/models/paginator-starship';
@@ -23,7 +23,7 @@ export class StarWarsService implements IStarWarsApi {
       .pipe(map((response: PaginatorStarship) => {
         response.results = this.urlHandlerService.urlHandler(response.results);
         return response;
-      }));
+      }), shareReplay(1));
   }
 
   getById(id: number): Observable<Starship> {
@@ -31,6 +31,6 @@ export class StarWarsService implements IStarWarsApi {
       .pipe(map((response: Starship) => {
         response = this.urlHandlerService.urlHandler(response);
         return response;
-      }));
+      }), shareReplay(1));
   }
 }

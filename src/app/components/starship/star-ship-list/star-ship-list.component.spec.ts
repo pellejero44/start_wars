@@ -5,6 +5,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { StarShipListComponent } from './star-ship-list.component';
 import { StarWarsService } from 'src/app/services/implementations/star-wars.service';
 import { StarWarsServiceMock } from 'src/app/mockers/star-wars.service-mock';
+import { By } from '@angular/platform-browser';
 
 
 describe('StarShipListComponent', () => {
@@ -39,11 +40,13 @@ describe('StarShipListComponent', () => {
       expect(injectedService).toBe(starWarsServiceTestBed);
     }));
 
-  it('should have "paginatorStarship" populated and start in the first page', () => {
-    expect(component.paginatorStarship).not.toBe(null);
+  it('should have "paginatorStarship" populated and start in the first page', async(() => {
     expect(component.page).toBe(0);
-    expect(component.paginatorStarship.results.length).toBeGreaterThan(0);
-  });
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.queryAll(By.css('app-starship-card')).length).toBeGreaterThan(0);
+    });
+  }));
 
   it('should render in the HTML as much app-starship-card as the value of pagesize', () => {
     expect(compiled.querySelectorAll('app-starship-card').length).toBe(component.pagesize);
@@ -75,13 +78,6 @@ describe('StarShipListComponent', () => {
     expect(component.paginator.hasPreviousPage()).toBeTrue();
     component.paginator.previousPage();
     expect(component.page).toBe(0);
-  });
-
-  it('should call unsubscribe() on ngOnDestroy', () => {
-    const privateVar = 'subscription';
-    const spy = spyOn(component[privateVar], 'unsubscribe').and.callThrough();
-    component.ngOnDestroy();
-    expect(spy).toHaveBeenCalledTimes(1);
   });
 
 });
