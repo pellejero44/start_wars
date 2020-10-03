@@ -45,6 +45,7 @@ import { environment } from '../environments/environment';
     StoreModule.forRoot({authReducer: reducer}),
     EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreModule.forRoot({}, {}),
   ],
   providers: [
     AuthService,
